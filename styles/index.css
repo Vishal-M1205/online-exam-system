@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Trispace:wght@100..800&display=swap');
+
+:root{
+    
+ --bg-navy: rgb(43, 43, 197);  
+ --bg-pink: rgb(240, 105, 127);
+ 
+}
+
+body{
+   
+    background: linear-gradient(to bottom, white 0% ,white 30% ,rgba(240, 105, 127, 0.166) 100%  );
+ 
+}
+
+#hero-title{
+ color: transparent;
+
+  background: linear-gradient(to left,rgba(43, 43, 197, 0.793)  ,rgb(240, 105, 127)   );
+ background-clip: text;
+
+}
+
+#hero-subtitle{
+    color: gray
+}
+
+.flip-card{
+    width: 260px;
+    height: 200px;
+    border: 2px solid var(--bg-pink);
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-front,.flip-card-back{
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.flip-card-back{
+    transform: rotateY(180deg);
+}
+.flip-card:hover .flip-card-inner{
+    transform: rotateY(180deg);
+}
+
+#navbar{
+ background-color: var(--bg-navy);
+ border-bottom: 5px solid var(--bg-pink);
+}
+
+.bg-navy{
+    background: var(--bg-navy);
+}
+
+.btn-pink{
+ background-color: var(--bg-pink);
+}
+.btn-pink:hover{
+ background-color: var(--bg-pink);
+}
+
+.text-pink{
+ color: var(--bg-pink);
+}
+.text-navy{
+ color: rgba(43, 43, 197, 0.718);
+}
+
+.sign-up-btn{
+    border: solid 2px var(--bg-pink);
+}
+.sign-up-btn:hover{
+    border: solid 2px var(--bg-pink);
+    background-color: var(--bg-pink);
+    color: white;
+}

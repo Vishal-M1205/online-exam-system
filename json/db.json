@@ -1,0 +1,129 @@
+{
+  "users": [
+     {
+      "name": "Vishal M",
+      "email": "visowmani.123@gmail.com",
+      "password": "Vishal@1205",
+      "dob": "2005-11-12",
+      "college": null,
+      "departmentName": null,
+      "role": "Admin",
+      "mobile":6379543139,
+      "id": "stDxilnYtIc"
+    },
+    {
+      "name": "Harish B",
+      "email": "harish.123@gmail.com",
+      "password": "Harish@123",
+      "dob": "2005-06-27",
+      "college": "SKASC",
+      "departmentName": "Information Technology",
+      "role": "Student",
+      "mobile":6379543139,
+      "id": "stDxilnYtIc"
+    }
+   
+  ],
+  "course": [
+    {
+      "courseId": 1,
+      "courseName": "Full Stack Web Development",
+      "departmentName": "Information Technology",
+      "deptId": 1,
+      "id": "MdI3phde7EY"
+    },
+    {
+      "courseId": 2,
+      "courseName": "Data Science",
+      "departmentName": "Information Technology",
+      "deptId": 1,
+      "id": "WHM3FaEKmJI"
+    },
+    {
+      "courseId": 3,
+      "courseName": "Cloud Computing",
+      "departmentName": "Information Technology",
+      "deptId": 1,
+      "id": "V2Z3P9vwGes"
+    },
+    {
+      "courseId": 4,
+      "courseName": "Digital Marketing",
+      "departmentName": "Business & Marketing",
+      "deptId": 2,
+      "id": "6jHluU_M_IA"
+    },
+    {
+      "courseId": 5,
+      "courseName": "Financial Accounting",
+      "departmentName": "Business & Marketing",
+      "deptId": 2,
+      "id": "BmDcOxy0HvY"
+    },
+    {
+      "courseId": 6,
+      "courseName": "Graphic Design",
+      "departmentName": "Creative Arts",
+      "deptId": 3,
+      "id": "ixQdjRGZGdk"
+    },
+    {
+      "courseId": 7,
+      "courseName": "UI/UX Design",
+      "departmentName": "Creative Arts",
+      "deptId": 3,
+      "id": "v3X_o84udLI"
+    },
+    {
+      "courseId": 8,
+      "courseName": "Spoken English",
+      "departmentName": "Language & Communication",
+      "deptId": 4,
+      "id": "moDGZarF5xg"
+    },
+    {
+      "courseId": 9,
+      "courseName": "Public Speaking",
+      "departmentName": "Language & Communication",
+      "deptId": 4,
+      "id": "p3oMdtt15b4"
+    },
+    {
+      "courseId": 10,
+      "courseName": "Cyber Security",
+      "departmentName": "Professional Skills",
+      "deptId": 5,
+      "id": "IdOZoLh2PlI"
+    }
+  ],
+  "department": [
+    {
+      "deptId": 1,
+      "departmentName": "Information Technology",
+      "id": "syZdThl94-c"
+    },
+    {
+      "deptId": 2,
+      "departmentName": "Business & Marketing",
+      "id": "70c6VvFtuSs"
+    },
+    {
+      "deptId": 3,
+      "departmentName": "Creative Arts",
+      "id": "nFcwGWuiBP8"
+    },
+    {
+      "deptId": 4,
+      "departmentName": "Language & Communication",
+      "id": "npxAaLMHLVQ"
+    },
+    {
+      "deptId": 5,
+      "departmentName": "Professional Skills",
+      "id": "ZeUSSy7VlSI"
+    }
+  ],
+  "enroll": [],
+  "testCentre": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}
