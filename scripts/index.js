@@ -1,5 +1,4 @@
-const DEP_API = 'http://localhost:3000/department';
-const USER_API = 'http://localhost:3000/users';
+import {USER_API,DEP_API} from '../scripts/api.js';
 
 const nameRegex = /^[A-Za-z ]{3,}$/;
 const emailRegex = /^[a-zA-z0-9-\.]+@[a-zA-z0-9-\.]+\.[a-zA-z0-9-\.]{2,}$/;
@@ -219,14 +218,15 @@ $('#logModalBtn').on('click',async ()=>{
       }
       else{
          toastr.success('Login Success');
+         localStorage.setItem('user',JSON.stringify(data));
          if(data[0].role == "Admin"){
             setTimeout(()=>{
-               window.location.assign('../pages/adminDash.html');
+               window.location.replace('../pages/adminDash.html');
             },1000)
          }
          else{
             setTimeout(()=>{
-               window.location.assign('../pages/studentDash.html');
+               window.location.replace('../pages/studentDash.html');
             },1000)
          }
       }

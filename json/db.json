@@ -1,6 +1,6 @@
 {
   "users": [
-     {
+    {
       "name": "Vishal M",
       "email": "visowmani.123@gmail.com",
       "password": "Vishal@1205",
@@ -8,7 +8,7 @@
       "college": null,
       "departmentName": null,
       "role": "Admin",
-      "mobile":6379543139,
+      "mobile": 6379543139,
       "id": "stDxilnYtIc"
     },
     {
@@ -19,10 +19,9 @@
       "college": "SKASC",
       "departmentName": "Information Technology",
       "role": "Student",
-      "mobile":6379543139,
+      "mobile": 6379543139,
       "id": "stDxilnYtIc"
     }
-   
   ],
   "course": [
     {
@@ -30,6 +29,7 @@
       "courseName": "Full Stack Web Development",
       "departmentName": "Information Technology",
       "deptId": 1,
+      "fees": 45000,
       "id": "MdI3phde7EY"
     },
     {
@@ -37,6 +37,7 @@
       "courseName": "Data Science",
       "departmentName": "Information Technology",
       "deptId": 1,
+      "fees": 50000,
       "id": "WHM3FaEKmJI"
     },
     {
@@ -44,6 +45,7 @@
       "courseName": "Cloud Computing",
       "departmentName": "Information Technology",
       "deptId": 1,
+      "fees": 40000,
       "id": "V2Z3P9vwGes"
     },
     {
@@ -51,6 +53,7 @@
       "courseName": "Digital Marketing",
       "departmentName": "Business & Marketing",
       "deptId": 2,
+      "fees": 30000,
       "id": "6jHluU_M_IA"
     },
     {
@@ -58,6 +61,7 @@
       "courseName": "Financial Accounting",
       "departmentName": "Business & Marketing",
       "deptId": 2,
+      "fees": 35000,
       "id": "BmDcOxy0HvY"
     },
     {
@@ -65,6 +69,7 @@
       "courseName": "Graphic Design",
       "departmentName": "Creative Arts",
       "deptId": 3,
+      "fees": 28000,
       "id": "ixQdjRGZGdk"
     },
     {
@@ -72,6 +77,7 @@
       "courseName": "UI/UX Design",
       "departmentName": "Creative Arts",
       "deptId": 3,
+      "fees": 32000,
       "id": "v3X_o84udLI"
     },
     {
@@ -79,6 +85,7 @@
       "courseName": "Spoken English",
       "departmentName": "Language & Communication",
       "deptId": 4,
+      "fees": 15000,
       "id": "moDGZarF5xg"
     },
     {
@@ -86,6 +93,7 @@
       "courseName": "Public Speaking",
       "departmentName": "Language & Communication",
       "deptId": 4,
+      "fees": 18000,
       "id": "p3oMdtt15b4"
     },
     {
@@ -93,6 +101,7 @@
       "courseName": "Cyber Security",
       "departmentName": "Professional Skills",
       "deptId": 5,
+      "fees": 55000,
       "id": "IdOZoLh2PlI"
     }
   ],
@@ -123,7 +132,107 @@
       "id": "ZeUSSy7VlSI"
     }
   ],
-  "enroll": [],
-  "testCentre": [],
+  "enroll": [
+    {
+      "name": "Vishal B",
+      "email": "harish.123@gmail.com",
+      "userId": "USR002",
+      "courseId": 1,
+      "courseName": "Full Stack Web Development",
+      "deptId": 1,
+      "deptName": "Information Technology",
+      "fees": 45000,
+      "centre": "Coimbatore",
+      "preferredDate": "2026-07-15",
+      "status": "Rejected",
+      "reason": "No slots, next available data jul 28, 2026",
+      "isDeleted": false,
+      "id": "1"
+    },
+    {
+      "name": "Harish B",
+      "email": "harish.123@gmail.com",
+      "userId": "USR002",
+      "courseId": 2,
+      "courseName": "Data Science",
+      "deptId": 1,
+      "deptName": "Information Technology",
+      "fees": 50000,
+      "centre": "Chennai",
+      "preferredDate": "2026-08-01",
+      "status": "Pending",
+      "reason": "",
+      "isDeleted": false,
+      "id": "2"
+    },
+    {
+      "name": "Harish B",
+      "email": "harish.123@gmail.com",
+      "userId": "USR002",
+      "courseId": 8,
+      "courseName": "Spoken English",
+      "deptId": 4,
+      "deptName": "Language & Communication",
+      "fees": 15000,
+      "centre": "Madurai",
+      "preferredDate": "2026-07-20",
+      "status": "Rejected",
+      "reason": "No slots, next available date Jul 07,2026",
+      "isDeleted": false,
+      "id": "3"
+    }
+  ],
+  "testCentre": [
+    {
+      "centreId": 1,
+      "centreName": "Coimbatore",
+      "id": "TC001"
+    },
+    {
+      "centreId": 2,
+      "centreName": "Chennai",
+      "id": "TC002"
+    },
+    {
+      "centreId": 3,
+      "centreName": "Madurai",
+      "id": "TC003"
+    },
+    {
+      "centreId": 4,
+      "centreName": "Salem",
+      "id": "TC004"
+    },
+    {
+      "centreId": 5,
+      "centreName": "Tiruppur",
+      "id": "TC005"
+    },
+    {
+      "centreId": 6,
+      "centreName": "Erode",
+      "id": "TC006"
+    },
+    {
+      "centreId": 7,
+      "centreName": "Trichy",
+      "id": "TC007"
+    },
+    {
+      "centreId": 8,
+      "centreName": "Vellore",
+      "id": "TC008"
+    },
+    {
+      "centreId": 9,
+      "centreName": "Tirunelveli",
+      "id": "TC009"
+    },
+    {
+      "centreId": 10,
+      "centreName": "Thanjavur",
+      "id": "TC010"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

@@ -10,11 +10,311 @@
     <link rel="stylesheet" href="../styles/index.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="container">
 
-    </div>
+    <nav class="navbar navbar-expand-lg " id="navbar">
+        <div class="navbar-brand text-white ms-4 fs-4">
+           <span class="bi bi-mortarboard-fill"></span> ScholarHub
+        </div>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+             <span class="bi bi-list  text-pink"></span>
+        </button>
+       <div class="navbar-collapse collapse text-center" id="navCollapse">
+         <ul class="navbar-nav ms-auto gap-2 me-3">
+            <li><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill">Hi <span id="userName"></span> !</a></li>
+            <li><a href="#"  class="btn sign-up-btn text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
+         </ul> 
+
+       </div>
+    </nav>
+
+
+    <section class="container-lg container-fluid mt-5">
+      <div class="row g-3 ">
+         <div class="col-md-6 col-12" >
+             <div class="row g-3">
+                <div class="col-12">
+                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3"  >
+                  <div class="d-flex flex-row align-items-center justify-content-between">
+                     <p class="fw-semibold fs-4"><span class="bi bi-hourglass-split mx-2"></span>Pending</p>
+                     <p class="fs-1 me-3 fw-bold" id="pendingCount"></p>
+                  </div>
+                  <div class="progress">
+                     <div class="progress-bar bg-warning " id="pendingBar" >
+                         
+                     </div>
+                  </div>
+                   
+                </div> 
+              </div>
+
+              <div class="col-sm-6 col-12">
+                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3"  >
+                  <div class="d-flex flex-row align-items-center justify-content-between">
+                     <p class="fw-semibold fs-4"><span class="bi bi-x-circle-fill mx-2"></span>Rejected</p>
+                     <p class="fs-1 me-3 fw-bold" id="rejectCount"></p>
+                  </div>
+                  <div class="progress">
+                     <div class="progress-bar bg-danger" id="rejectBar" >
+                         
+                     </div>
+                  </div>
+                   
+                </div> 
+              </div>
+              
+              <div class="col-sm-6 col-12 ">
+                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3"  >
+                  <div class="d-flex flex-row align-items-center justify-content-between">
+                     <p class="fw-semibold fs-4"><span class="bi bi-patch-check-fill mx-2"></span>Approved</p>
+                     <p class="fs-1 me-3 fw-bold" id="approveCount"></p>
+                  </div>
+                  <div class="progress">
+                     <div class="progress-bar bg-success" id="approveBar" >
+                         
+                     </div>
+                  </div>
+                   
+                </div> 
+              </div>
+
+             </div>
+             
+              
+              
+      </div>
+       
+        <div class="col-md-6 col-12">
+          <div class="row g-md-3 g-2">
+            <div class="col-6">
+                  <div class="bg-blue-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg">
+                        <div>
+                           <p class="bi bi-journal-bookmark-fill mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Courses</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="courseCount"></p>
+                        </div>
+                  </div>
+            </div>
+            <div class="col-6">
+                  <div class="bg-pink-gradient shadow-lg text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between">
+                        <div>
+                           <p class="bi bi-person-lines-fill mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Students</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="studentCount"></p>
+                        </div>
+                  </div>
+            </div>
+            <div class="col-6">
+                  <div class="bg-teal-gradient shadow-lg text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between">
+                        <div>
+                           <p class="bi bi-card-checklist mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Enrollment</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="enrollCount"></p>
+                        </div>
+                  </div>
+            </div>
+            <div class="col-6">
+                  <div class="bg-test-gradient shadow-lg text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between">
+                        <div>
+                           <p class="bi bi-building mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Centres</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="centreCount"></p>
+                        </div>
+                  </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      
+    </section>
+
+    <section class="container-lg container-fluid mt-5">
+          <div class="row bg-light align-items-center border border-1 py-2 px-2 rounded-5 g-3">
+            <div class="col-lg-3 col-sm-4 col-12 mt-0">
+                <div class="d-flex gap-1">
+                   <input type="text" class="form-control" placeholder="Search Name.." id="searchInput">
+                   <div class="btn-group">
+                      <button class="btn btn-primary" id="searchBtn"><span class="bi bi-search"></span></button>
+                      <button class="btn btn-danger" id="clrSearch" disabled><span class="bi bi-x"></span></button>
+                   </div>
+                 
+               </div>
+               
+            </div>
+             <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
+               <button class="btn btn-primary">
+                     Restore
+               </button>
+             </div>
+             <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
+                 <div class="btn-group">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">Filter</button>
+                    <button class="btn btn-danger bi bi-x" disabled id="clrFilter"></button>
+                 </div>
+             </div>
+             <div class="col-lg-5 col-12 mt-lg-0">
+                 <div class="row g-4 align-items-center">
+                     <div class="col-sm-3 col-2 px-0 text-center ">
+                <button class="btn text-black btn-pink-gradient   px-md-4 rounded-5" id="allBtn">All</button>
+             </div>
+             <div class="col-3 text-center p-0">
+                <button class="btn rounded-5" id="apprBtn" >Approved</button>
+             </div>
+             <div class="col-3 text-center ">
+                <button class="btn rounded-5" id="pendBtn">Pending</button>
+             </div>
+             <div class="col-3 text-center ">
+                <button class="btn rounded-5" id="rejBtn">Rejected</button>
+             </div>
+                 </div>
+             </div>
+             
+          </div>
+    </section>
+    
+    <section class="container-lg container-fluid mt-3">
+
+      <div class="d-flex justify-content-between">
+         <p class="fs-3  text-lg-start  ms-lg-2 fw-semibold ">Enrollment Data</p>
+       <ul class="pagination pagination-sm align-items-center">
+         <li class="page-link"> << </li>
+         <li class="page-link active"> 1 </li>
+         <li class="page-link"> >> </li>
+       </ul>
+      </div>
+
+      <div class="table-responsive">
+          <table class="table table-hover table-light table-striped  ">
+              <thead>
+               <tr>
+                 <th>SNo.</th>
+                 <th>Name</th>
+                 <th>Course</th>
+                 <th>City</th>
+                 <th>Date</th>
+                 <th>Status</th>
+                 <th>Action</th>
+               </tr>
+                 
+              </thead>
+              <tbody id="parent">
+                  
+                 
+                 
+              </tbody>
+        </table>
+      </div>
+       
+    </section>
    
+    <div class="modal fade" id="filterModal">
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+              <h4 class="modal-title">Filter</h4>
+              <button class="btn btn-close" data-bs-dismiss="modal"></button>
+           </div>
+           <div class="modal-body">
+              <label for="courseNameFilter" class="form-label">Select Course</label>
+              <select  id="courseNameFilter" class="form-select mb-2" >
+               
+              </select>
+              <label for="examDateFilter" class="form-label">Exam Date</label>
+              <input type="date" id="examDateFilter" class="form-control">
+
+           </div>
+           <div class="modal-footer">
+            <button class="btn btn-primary ms-auto" data-bs-dismiss="modal" id="filterAplyBtn">Apply</button>
+           </div>
+         </div>
+       </div>
+    </div>
+
+
+    <div class="modal modal-lg fade" id="viewModal">
+      <div class="modal-dialog modal-dialog-scrollable">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h4 class="modal-title">Student Details</h4>
+                 <button class="btn btn-close ms-auto" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                 <div class="row g-2">
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Name</p>
+                     <p id="viewName"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Email</p>
+                     <p id="viewEmail"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Course</p>
+                     <p id="viewCourse"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Department</p>
+                     <p id="viewDept"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Fees</p>
+                     <p id="viewFees"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Centre</p>
+                     <p id="viewCentre"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Requested Date</p>
+                     <p id="viewDate"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Status</p>
+                     <p id="viewStatus" ></p>
+                   </div>
+                   <div class="col-12">
+                     <p class="fw-bold mb-0">Reason</p>
+                     <p id="viewReason"></p>
+                   </div>
+                 </div>
+              </div>
+           </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="rejectModal">
+       <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Reason for rejection ?</h4>
+            <button class="btn btn-close" data-bs-dismiss="modal"></button>
+         </div>
+         <div class="modal-body">
+           <textarea  id="reason" class="form-control"></textarea>
+         </div>
+         <div class="modal-footer">
+              <button class="btn btn-primary" id="rejectSubmit">Submit</button>
+         </div>
+        </div>
+       </div>
+    </div>
+    
+    <script type="module" src="../scripts/api.js"></script>
+    <script type="module" src="../scripts/adminDash.js"></script>
+
+
+
 </body>
 </html>

@@ -83,3 +83,26 @@ body{
     background-color: var(--bg-pink);
     color: white;
 }
+
+
+.bg-pink-gradient{
+     background: linear-gradient(to bottom, #ff5f7e, #ff9a8b);
+}
+
+.bg-blue-gradient{
+   background: linear-gradient(to bottom, #2563eb, #60a5fa);
+}
+
+.bg-teal-gradient{
+  background: linear-gradient(to bottom, #8b5cf6, #c084fc);
+}
+
+.bg-test-gradient{
+background: linear-gradient(to bottom, #f97316, #fdba74);
+}
+
+.btn-pink-gradient{
+    border: none;
+    color: white !important;
+    background: linear-gradient(to bottom, #ff5f7e, #ff9a8b);
+}
