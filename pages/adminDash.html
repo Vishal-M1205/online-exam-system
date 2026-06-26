@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ScholarHub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -154,8 +154,8 @@
                
             </div>
              <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
-               <button class="btn btn-primary">
-                     Restore
+               <button class="btn " id="deletedBtn">
+                    Show Cancelled
                </button>
              </div>
              <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
@@ -284,7 +284,7 @@
                      <p class="fw-bold mb-0">Status</p>
                      <p id="viewStatus" ></p>
                    </div>
-                   <div class="col-12">
+                   <div class="col-12 d-none" id="reason">
                      <p class="fw-bold mb-0">Reason</p>
                      <p id="viewReason"></p>
                    </div>
@@ -302,7 +302,7 @@
             <button class="btn btn-close" data-bs-dismiss="modal"></button>
          </div>
          <div class="modal-body">
-           <textarea  id="reason" class="form-control"></textarea>
+           <textarea  id="rejectReason" class="form-control"></textarea>
          </div>
          <div class="modal-footer">
               <button class="btn btn-primary" id="rejectSubmit">Submit</button>
@@ -311,9 +311,13 @@
        </div>
     </div>
     
+   
+   
+
     <script type="module" src="../scripts/api.js"></script>
     <script type="module" src="../scripts/adminDash.js"></script>
-
+   
+    
 
 
 </body>

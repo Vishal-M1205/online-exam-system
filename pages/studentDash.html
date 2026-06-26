@@ -2,10 +2,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ScholarHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles/index.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    Student Dash
+    <nav class="navbar navbar-expand-lg " id="navbar">
+        <div class="navbar-brand text-white ms-4 fs-4">
+           <span class="bi bi-mortarboard-fill"></span> ScholarHub
+        </div>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+             <span class="bi bi-list  text-pink"></span>
+        </button>
+       <div class="navbar-collapse collapse text-center" id="navCollapse">
+         <ul class="navbar-nav ms-auto gap-2 me-3">
+            <li><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill">Hi <span id="userName"></span> !</a></li>
+            <li><a href="#"  class="btn sign-up-btn text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
+         </ul> 
+
+       </div>
+    </nav>
     
+    <section class="container-lg container-fluid mt-5">
+   <div class="row g-3">
+     <div class="col-md-3 col-sm-6 col-12">
+        <div class="bg-blue-gradient text-white px-md-3 px-2 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg">
+                        <div>
+                           <p class="bi bi-person-plus-fill mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Enrollment</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0 me-1" id="enrollCount"></p>
+                        </div>
+                  </div>
+     </div>
+     <div class="col-md-3 col-sm-6 col-12">
+        <div class="bg-success-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg">
+                        <div>
+                           <p class="bi bi-check-circle-fill mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Approved</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="approveCount"></p>
+                        </div>
+                  </div>
+     </div>
+     <div class="col-md-3 col-sm-6 col-12">
+        <div class="bg-danger-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg">
+                        <div>
+                           <p class="bi bi-x-circle-fill mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Rejected</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="rejectCount"></p>
+                        </div>
+                  </div>
+     </div>
+     <div class="col-md-3 col-sm-6 col-12">
+        <div class="bg-yellow-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg">
+                        <div>
+                           <p class="bi bi-hourglass-split mb-0 fs-3"></p> 
+                            <p class="fw-semibold fs-4 mb-0">Pending</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                           <p class="fw-bold fs-1 mb-0" id="pendingCount"></p>
+                        </div>
+                  </div>
+     </div>
+   </div>
+    </section>
+
+    <section class="container-lg container-fluid mt-5">
+        <div class="d-flex justify-content-between ">
+         <p class="fs-3  text-lg-start  ms-lg-2 fw-semibold mb-0">Enrollment Data</p>
+         <div class="d-flex gap-2 align-items-center justify-content-center">
+            <div>
+              <button class="btn btn-primary">
+                   Explore Course
+             </button>
+            </div>
+            <div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#enrollModal">
+                   Enroll Exam
+             </button>
+            </div>
+             
+           
+         </div>
+      </div>
+      
+      <section class="container-lg container-fluid mt-4">
+          <div class="row bg-light align-items-center border border-1 py-2 px-2 rounded-5 g-3">
+            <div class="col-lg-3 col-sm-4 col-12 mt-0">
+                <div class="d-flex gap-1">
+                   <input type="text" class="form-control" placeholder="Search Centre.." id="searchInput">
+                  
+                 
+               </div>
+               
+            </div>
+            
+             <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
+                 <div class="btn-group">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">Filter</button>
+                    <button class="btn btn-danger bi bi-x" disabled id="clrFilter"></button>
+                 </div>
+             </div>
+             <div class="col-lg-5 col-12 mt-lg-0">
+                 <div class="row g-4 align-items-center ">
+                     <div class="col-sm-3 col-2 px-0 text-center ">
+                <button class="btn text-black btn-pink-gradient   px-md-4 rounded-5" id="allBtn">All</button>
+             </div>
+             <div class="col-3 text-center p-0">
+                <button class="btn rounded-5" id="apprBtn" >Approved</button>
+             </div>
+             <div class="col-3 text-center ">
+                <button class="btn rounded-5" id="pendBtn">Pending</button>
+             </div>
+             <div class="col-3 text-center ">
+                <button class="btn rounded-5" id="rejBtn">Rejected</button>
+             </div>
+                 </div>
+             </div>
+             
+          </div>
+    </section>
+
+    </section>
+
+    <section class="container-lg container-fluid mt-3">
+      <div class="row g-2" id="parent">
+         
+       
+        
+      </div>
+    </section>
+
+
+    <div class="modal fade" id="filterModal">
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+              <h4 class="modal-title">Filter</h4>
+              <button class="btn btn-close" data-bs-dismiss="modal"></button>
+           </div>
+           <div class="modal-body">
+              <label for="startDateFilter" class="form-label">Start Date</label>
+              <input type="date" class="form-control"  id="startDateFilter">
+               
+              <label for="endDateFilter" class="form-label">End Date</label>
+              <input type="date" id="endDateFilter" class="form-control">
+
+           </div>
+           <div class="modal-footer">
+            <button class="btn btn-primary ms-auto" data-bs-dismiss="modal" id="filterAplyBtn">Apply</button>
+           </div>
+         </div>
+       </div>
+    </div>
+    
+    
+    <div class="modal fade" id="enrollModal">
+       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+         <div class="modal-content">
+           <div class="modal-header">
+              <h4 class="modal-title">Enroll Exam</h4>
+              <button class="btn btn-close" data-bs-dismiss="modal"></button>
+           </div>
+           <form class="modal-body" id="enrollForm">
+               <label for="course" class="form-label">Select Course</label>
+               <select  id="course" class="form-select">
+                 
+               </select>
+               <label for="fees" class="form-label">Fees</label>
+               <input type="text" class="form-control"  id="fees" readonly>
+               <label for="centre" class="form-label">Select Exam Centre</label>
+               <select  id="centre" class="form-select">
+                 
+               </select>
+               <label for="examDate" class="form-label">Preferred Exam Date</label>
+               <input type="date"  id="examDate" class="form-control" onkeydown="{return false;}">
+
+
+           </form>
+           <div class="modal-footer">
+            <button class="btn btn-primary ms-auto" id="enrollApplyBtn">Apply</button>
+           </div>
+         </div>
+       </div>
+    </div>
+
+    <div class="modal modal-lg fade" id="viewModal">
+      <div class="modal-dialog modal-dialog-scrollable">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h4 class="modal-title">Student Details</h4>
+                 <button class="btn btn-close ms-auto" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                 <div class="row g-2">
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Name</p>
+                     <p id="viewName"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Email</p>
+                     <p id="viewEmail"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Course</p>
+                     <p id="viewCourse"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Department</p>
+                     <p id="viewDept"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Fees</p>
+                     <p id="viewFees"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Centre</p>
+                     <p id="viewCentre"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Requested Date</p>
+                     <p id="viewDate"></p>
+                   </div>
+                   <div class="col-lg-6 col-12">
+                     <p class="fw-bold mb-0">Status</p>
+                     <p id="viewStatus" ></p>
+                   </div>
+                   <div class="col-12 d-none" id="reason">
+                     <p class="fw-bold mb-0">Reason</p>
+                     <p id="viewReason"></p>
+                   </div>
+                 </div>
+              </div>
+           </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="updateModal">
+       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+         <div class="modal-content">
+           <div class="modal-header">
+              <h4 class="modal-title">Update Exam Detail</h4>
+              <button class="btn btn-close" data-bs-dismiss="modal"></button>
+           </div>
+           <form class="modal-body" >
+               <label for="updateCourse" class="form-label">Select Course</label>
+               <select  id="updateCourse" class="form-select">
+                       
+               </select>
+               <label for="updateFees" class="form-label">Fees</label>
+               <input type="text" class="form-control"  id="updateFees" readonly>
+               <label for="updateCentre" class="form-label">Select Exam Centre</label>
+               <select  id="updateCentre" class="form-select">
+                 
+               </select>
+               <label for="updateExamDate" class="form-label">Preferred Exam Date</label>
+               <input type="date"  id="updateExamDate" class="form-control" onkeydown="{return false;}">
+
+
+           </form>
+           <div class="modal-footer">
+            <button class="btn btn-primary ms-auto" id="updateApplyBtn">Apply</button>
+           </div>
+         </div>
+       </div>
+    </div>
+
+    <div class="modal fade" id="reapplyModal">
+       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Reapply Exam</h4>
+              <button class="btn btn-close" data-bs-dismiss="modal"></button>
+           </div>
+           <div class="modal-body">
+               <label for="reapplyDate">Select Date</label>
+               <input type="date" class="form-control" id="reapplyDate" >
+           </div>
+           <div class="modal-footer"> 
+             <button class="btn btn-primary ms-auto" id="reapplySubmitBtn">Apply</button>
+           </div>
+        </div>
+       </div>
+    </div>
+
+    <script type="module" src="../scripts/studentDash.js"></script>
 </body>
 </html>

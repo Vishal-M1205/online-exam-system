@@ -7,6 +7,8 @@ let searchQuery = "";
 let courseQuery = "";
 let examDateQuery = "";
 
+let isDeleted = false;
+
 const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
 
 toastr.options = {
@@ -121,7 +123,14 @@ async function viewDetails(id){
     $('#viewCentre').text(data.centre)
     $('#viewDate').text(data.preferredDate)
     $('#viewStatus').text(data.status)
-    $('#viewReason').text(data.reason)
+    if(data.reason){
+       $('#viewReason').text(data.reason)
+       $('#reason').removeClass('d-none')
+    }
+    else{
+        $('#reason').addClass('d-none')
+    }
+   
 }
 
 async function approveEnrollment(id){
@@ -146,6 +155,7 @@ async function approveEnrollment(id){
     })
   });
   getRecordOnStatus();
+  getStats();
     }
   
 }
@@ -153,8 +163,8 @@ async function approveEnrollment(id){
 let enrollIdForReject = "";
 
 $('#rejectSubmit').on('click',async ()=>{
-   
-   if(!$('#reason').val()){
+   console.log($('#rejectReason').val());
+   if(!$('#rejectReason').val()){
     toastr.warning('Empty field not allowed!');
     return;
    }
@@ -174,11 +184,12 @@ $('#rejectSubmit').on('click',async ()=>{
         },
         body:JSON.stringify({
             status: "Rejected",
-            reason: $("#reason").val()
+            reason: $("#rejectReason").val()
         })
      });
      getRecordOnStatus();
      rejectModal.hide();
+     getStats();
     }
    
    
@@ -203,6 +214,30 @@ async function delteRecord(id){
         })
      });
      getRecordOnStatus();
+     getStats();
+    }
+}
+
+async function restoreRecord(id){
+   const sweetResponse = await  Swal.fire({
+    title: 'Are you sure you want to restore?',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33'
+    }) 
+    if(sweetResponse.isConfirmed){
+        const response = await fetch(`${ENROLL_API}/${id}`,{
+        method:"PATCH",
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            isDeleted:false
+        })
+     });
+     getRecordOnStatus();
+     getStats();
     }
 }
 
@@ -246,23 +281,32 @@ function renderElement(data){
                     data-id="${e.id}">
                    <i class="bi bi-eye" ></i>
                   </button>
-                  <button class="btn btn-success btn-sm m-1" ${e.status=="Pending"?``:`disabled`} 
+                  ${isDeleted?`
+                     <button class="btn btn-warning btn-sm m-1" id="restoreBtn" data-id="${e.id}" >
+                   <i class="bi bi-arrow-counterclockwise"></i>
+                     </button>
+                    
+                    
+                    `:` <button class="btn btn-success btn-sm m-1" ${e.status=="Pending"?``:`disabled`} 
                   id="approveBtn"
                   data-id="${e.id}">
                    <i class="bi bi-check-circle"></i>
                   </button>
-                  <button class="btn btn-warning btn-sm m-1" ${e.status=="Pending"?``:`disabled`} 
+                  
+                    <button class="btn btn-warning btn-sm m-1" ${e.status=="Pending"?``:`disabled`} 
                   data-bs-toggle="modal"
                   data-bs-target="#rejectModal"
                   id="rejectBtn"
                   data-id="${e.id}">
                    <i class="bi bi-x-circle"></i>
                   </button>
-                  <button class="btn btn-danger btn-sm m-1"
-                  id="deleteBtn"
-                  data-id="${e.id}">
-                   <i class="bi bi-trash"></i>
-                  </button>
+
+                  
+
+                  `}
+                 
+                
+                  
                   </td>
 
                  </tr>
@@ -279,25 +323,25 @@ document.addEventListener('click',(e)=>{
         if(e.target.closest('#viewBtn')){
            viewDetails(e.target.closest('#viewBtn').dataset.id)
         }    
-})
 
-document.addEventListener('click',(e)=>{
         if(e.target.closest('#approveBtn')){
            approveEnrollment(e.target.closest('#approveBtn').dataset.id)
-        }    
-})
+        } 
 
-document.addEventListener('click',(e)=>{
         if(e.target.closest('#rejectBtn')){
            enrollIdForReject = e.target.closest('#rejectBtn').dataset.id;
-        }    
-})
+        }  
 
-document.addEventListener('click',(e)=>{
         if(e.target.closest('#deleteBtn')){
            delteRecord(e.target.closest('#deleteBtn').dataset.id);
-        }    
+        }
+
+        if(e.target.closest('#restoreBtn')){
+           restoreRecord(e.target.closest('#restoreBtn').dataset.id);
+        } 
 })
+
+
 
 
 async function getRecordOnStatus() {
@@ -320,7 +364,7 @@ async function getRecordOnStatus() {
         params.append("preferredDate",examDateQuery);
     }
     
-    params.append('isDeleted','false');
+    params.append('isDeleted',isDeleted);
 
     const response = await fetch(`${ENROLL_API}?${params}`);
     const data = await response.json();
@@ -377,6 +421,17 @@ $('#rejBtn').on('click',()=>{
     getRecordOnStatus();
 })
 
+
+$('#deletedBtn').on('click',function(){
+    if(!isDeleted){
+        isDeleted = true;
+    }
+    else{
+        isDeleted = false;
+    }
+    getRecordOnStatus();
+    $(this).toggleClass('btn-pink-gradient');
+})
 
 
 
