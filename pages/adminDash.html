@@ -35,14 +35,15 @@
       <div class="row g-3 ">
          <div class="col-md-6 col-12" >
              <div class="row g-3">
-                <div class="col-12">
-                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3"  >
+                <div class="col-12 ">
+                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3 bg-pending-card"  >
                   <div class="d-flex flex-row align-items-center justify-content-between">
-                     <p class="fw-semibold fs-4"><span class="bi bi-hourglass-split mx-2"></span>Pending</p>
-                     <p class="fs-1 me-3 fw-bold" id="pendingCount"></p>
+                     <p class="fw-semibold fs-4 text-yellow"><span class="bi bi-hourglass-split mx-2"></span>Pending</p>
+                     <p class="fs-1 me-3 fw-bold text-yellow" id="pendingCount"></p>
                   </div>
                   <div class="progress">
-                     <div class="progress-bar bg-warning " id="pendingBar" >
+                     <div class="progress-bar
+                     progress-bar-animated progress-bar-striped bg-warning " id="pendingBar" >
                          
                      </div>
                   </div>
@@ -51,13 +52,13 @@
               </div>
 
               <div class="col-sm-6 col-12">
-                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3"  >
+                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3 bg-rejected-card"  >
                   <div class="d-flex flex-row align-items-center justify-content-between">
-                     <p class="fw-semibold fs-4"><span class="bi bi-x-circle-fill mx-2"></span>Rejected</p>
-                     <p class="fs-1 me-3 fw-bold" id="rejectCount"></p>
+                     <p class="fw-semibold fs-4 text-danger"><span class="bi bi-x-circle-fill mx-2"></span>Rejected</p>
+                     <p class="fs-1 me-3 fw-bold text-danger" id="rejectCount"></p>
                   </div>
                   <div class="progress">
-                     <div class="progress-bar bg-danger" id="rejectBar" >
+                     <div class="progress-bar progress-bar-animated progress-bar-striped bg-danger" id="rejectBar" >
                          
                      </div>
                   </div>
@@ -66,13 +67,14 @@
               </div>
               
               <div class="col-sm-6 col-12 ">
-                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3"  >
+                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3 bg-approved-card"  >
                   <div class="d-flex flex-row align-items-center justify-content-between">
-                     <p class="fw-semibold fs-4"><span class="bi bi-patch-check-fill mx-2"></span>Approved</p>
-                     <p class="fs-1 me-3 fw-bold" id="approveCount"></p>
+                     <p class="fw-semibold fs-4 text-success"><span class="bi bi-patch-check-fill mx-2"></span>Approved</p>
+                     <p class="fs-1 me-3 fw-bold text-success" id="approveCount"></p>
                   </div>
                   <div class="progress">
-                     <div class="progress-bar bg-success" id="approveBar" >
+                     <div class="progress-bar
+                     progress-bar-animated progress-bar-striped bg-success" id="approveBar" >
                          
                      </div>
                   </div>
@@ -142,26 +144,30 @@
 
     <section class="container-lg container-fluid mt-5">
           <div class="row bg-light align-items-center border border-1 py-2 px-2 rounded-5 g-3">
-            <div class="col-lg-3 col-sm-4 col-12 mt-0">
+            <div class="col-lg-2 col-sm-4 col-12 mt-0">
                 <div class="d-flex gap-1">
                    <input type="text" class="form-control" placeholder="Search Name.." id="searchInput">
-                   <div class="btn-group">
-                      <button class="btn btn-primary" id="searchBtn"><span class="bi bi-search"></span></button>
-                      <button class="btn btn-danger" id="clrSearch" disabled><span class="bi bi-x"></span></button>
-                   </div>
+                   
                  
                </div>
                
             </div>
-             <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
-               <button class="btn " id="deletedBtn">
+             <div class="col-lg-3 col-sm-4 col-6 mt-sm-0 text-center">
+               <div class="d-flex">
+                <button class="btn " id="deletedBtn">
                     Show Cancelled
                </button>
+               <button class="btn " id="attendedBtn">
+                    Show Attended
+               </button>
+               </div>
+               
+               
              </div>
-             <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-center">
+             <div class="col-lg-2 col-sm-4 col-6 mt-sm-0 text-end">
                  <div class="btn-group">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">Filter</button>
-                    <button class="btn btn-danger bi bi-x" disabled id="clrFilter"></button>
+                    <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#filterModal">Filter</button>
+                    <button class="btn btn-sm btn-danger bi bi-x" disabled id="clrFilter"></button>
                  </div>
              </div>
              <div class="col-lg-5 col-12 mt-lg-0">
@@ -189,9 +195,9 @@
       <div class="d-flex justify-content-between">
          <p class="fs-3  text-lg-start  ms-lg-2 fw-semibold ">Enrollment Data</p>
        <ul class="pagination pagination-sm align-items-center">
-         <li class="page-link"> << </li>
-         <li class="page-link active"> 1 </li>
-         <li class="page-link"> >> </li>
+         <li class="page-link cursor-pointer" id="prevPage"> << </li>
+         <li class="page-link active" id="pageNum"> 1 </li>
+         <li class="page-link cursor-pointer" id="nextPage"> >> </li>
        </ul>
       </div>
 

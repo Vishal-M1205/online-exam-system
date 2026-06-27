@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles/index.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg " id="navbar">
+        <div class="navbar-brand text-white ms-4 fs-4">
+           <span class="bi bi-mortarboard-fill"></span> ScholarHub
+        </div>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+             <span class="bi bi-list  text-pink"></span>
+        </button>
+       <div class="navbar-collapse collapse text-center" id="navCollapse">
+         <ul class="navbar-nav ms-auto gap-2 me-3">
+            <li><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill">Hi <span id="userName"></span> !</a></li>
+            <li><a href="#"  class="btn sign-up-btn text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
+         </ul> 
+
+       </div>
+    </nav>
+
+    <section class="container-lg container-fluid mt-5">
+        <div class="d-flex align-items-center justify-content-between" >
+           <p class="display-5 fw-semibold mb-0">Exams</p>
+           <button class="btn btn-primary mb-0" id="backBtn">
+            Back <<
+           </button>
+        </div> 
+        
+        <div class="row g-3 mt-3" id="courseParent">
+               
+        </div>
+
+    </section>
+
+    <script type="module" src="../scripts/coursePage.js"></script>
+</body>
+</html>

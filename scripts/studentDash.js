@@ -4,6 +4,13 @@ const userDetails = JSON.parse(localStorage.getItem('user'));
 
 console.log(userDetails);
 
+function dateFormat(date){
+  let newDate = new Date(date)
+  newDate = newDate.toDateString().split(" ")
+   return `${newDate[1]} ${newDate[2]},${newDate[3]}`
+
+}
+
 let status = "";
 let searchQuery = "";
 let startDateQuery = "";
@@ -86,15 +93,17 @@ async function renderElement(data) {
            <div class="d-flex align-items-start justify-content-between bg-white border border-2 px-4 py-3 rounded-4">
              <div class="d-flex flex-column gap-2">
               <p class="mb-0 fw-semibold">${e.courseName}</p>
-               <p class="mb-0"><span class="fw-bold">Exam Date : </span>${e.preferredDate}</p>
+               <p class="mb-0"><span class="fw-bold">Exam Date : </span>${dateFormat(e.preferredDate)}</p>
                <p class="mb-0"><span class="fw-bold">Centre : </span>${e.centre}</p>
                <p class="px-2 py-1 
               ${e.status == "Approved"?`
                 bg-success-subtle text-success
                 `: e.status == "Pending" ? `
                 bg-warning-subtle text-warning
-                `:`
+                `:e.status == "Rejected"?`
                 bg-danger-subtle text-danger
+                `:`
+                bg-info-subtle text-info
                 ` }
                 
 
@@ -102,7 +111,7 @@ async function renderElement(data) {
              </div>
              <div class="d-flex flex-column gap-2" >
 
-                 <button class="btn btn-info bi bi-eye"
+                 <button class="btn  bi bi-eye "
                  data-bs-toggle="modal"
                  data-bs-target="#viewModal"
                  data-id="${e.id}"
@@ -110,11 +119,15 @@ async function renderElement(data) {
                  </button>
                  
                  ${e.status == "Pending"?`
-                    <button class="btn btn-warning bi bi-pen"
+                    <button class="btn  bi bi-pen"
                     data-bs-toggle="modal"
                     data-bs-target="#updateModal"
                     id="updateBtn"
                     data-id="${e.id}">
+                 </button>
+                  <button class="btn btn-danger bi bi-trash" 
+                 id="cancelBtn"
+                 data-id="${e.id}">
                  </button>
                     `:e.status == "Rejected"?`
                     <button class="btn btn-warning bi bi-arrow-counterclockwise"
@@ -123,14 +136,28 @@ async function renderElement(data) {
                     id="reapplyBtn"
                     data-id="${e.id}">
                  </button>
-                    `:``}
-                 
-                 
-
-                 <button class="btn btn-danger bi bi-trash" 
+                  <button class="btn btn-danger bi bi-trash" 
                  id="cancelBtn"
                  data-id="${e.id}">
                  </button>
+                    `:e.status == "Approved"?`
+                    <button class="btn btn-success bi bi-check-circle" 
+                    id="attendBtn"
+                 data-id="${e.id}">
+                 </button>
+                  <button class="btn btn-danger bi bi-trash" 
+                 id="cancelBtn"
+                 data-id="${e.id}">
+                 </button>
+                    `:`
+                    
+                    
+                    `}
+                 
+                
+                    
+
+                
 
              </div>
            </div>
@@ -151,7 +178,7 @@ async function viewDetails(id){
     $('#viewDept').text(data.deptName)
     $('#viewFees').text(data.fees)
     $('#viewCentre').text(data.centre)
-    $('#viewDate').text(data.preferredDate)
+    $('#viewDate').text(dateFormat(data.preferredDate))
     $('#viewStatus').text(data.status)
     if(data.reason){
        $('#viewReason').text(data.reason)
@@ -213,7 +240,37 @@ document.addEventListener('click',(e)=>{
             
            cancelEnroll(e.target.closest('#cancelBtn').dataset.id)
         }    
+        if(e.target.closest('#attendBtn')){
+            
+           attendExam(e.target.closest('#attendBtn').dataset.id)
+        }    
     });
+
+async function attendExam(id) {
+    const SweetResponse = await  Swal.fire({
+      title: 'Are you sure you attended the exam?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+      }) 
+
+      if(SweetResponse.isConfirmed){
+        const response = await fetch(`${ENROLL_API}/${id}`,{
+          method:'PATCH',
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify({
+            status:"Attended"
+          })
+      });
+      getRecordOnStatus();
+      getStats();
+      toastr.success('Thank you for Attending the Exam');
+      }
+     
+}
 
 async function cancelEnroll(id) {
        const SweetResponse = await  Swal.fire({
@@ -231,8 +288,7 @@ async function cancelEnroll(id) {
             "Content-Type":"application/json"
           },
           body:JSON.stringify({
-            isDeleted:true,
-            status:'Cancelled'
+            isDeleted:true
           })
       });
       getRecordOnStatus();
@@ -504,37 +560,46 @@ $("#enrollApplyBtn").on('click',async ()=>{
     }
 })
 
-function btnState(add,rem1,rem2,rem3){
+function btnState(add,rem1,rem2,rem3,rem4){
     $(add).addClass('btn-pink-gradient');
     $(rem1).removeClass('btn-pink-gradient');
     $(rem2).removeClass('btn-pink-gradient');
     $(rem3).removeClass('btn-pink-gradient');
+    $(rem4).removeClass('btn-pink-gradient');
 }
 
-$('#allBtn').on('click', ()=>{
-    btnState('#allBtn','#apprBtn','#pendBtn','#rejBtn');
+$('#allBtn,#enrollCard').on('click', ()=>{
+    btnState('#allBtn','#apprBtn','#pendBtn','#rejBtn','#attnBtn');
     status = "";
     getRecordOnStatus();
 })
 
-$('#apprBtn').on('click',()=>{
-    btnState('#apprBtn','#allBtn','#pendBtn','#rejBtn');
+$('#apprBtn,#approvedCard').on('click',()=>{
+    btnState('#apprBtn','#allBtn','#pendBtn','#rejBtn','#attnBtn');
     status = 'Approved'
     getRecordOnStatus()
 
 })
 
-$('#pendBtn').on('click',()=>{
-    btnState('#pendBtn','#allBtn','#apprBtn','#rejBtn');
+$('#pendBtn,#pendingCard').on('click',()=>{
+    btnState('#pendBtn','#allBtn','#apprBtn','#rejBtn','#attnBtn');
     status = 'Pending';
     getRecordOnStatus();
 })
 
-$('#rejBtn').on('click',()=>{
-    btnState('#rejBtn','#allBtn','#pendBtn','#apprBtn');
+$('#rejBtn,#rejectedCard').on('click',()=>{
+    btnState('#rejBtn','#allBtn','#pendBtn','#apprBtn','#attnBtn');
     status = 'Rejected'
     getRecordOnStatus();
 })
+
+$('#attnBtn').on('click',()=>{
+    btnState('#attnBtn','#allBtn','#pendBtn','#apprBtn','#rejBtn');
+    status = 'Attended'
+    getRecordOnStatus();
+})
+
+
 
 $('#filterAplyBtn').on('click',()=>{
    startDateQuery = $('#startDateFilter').val();
@@ -554,4 +619,9 @@ $("#clrFilter").on('click',()=>{
 $("#searchInput").on('input',function(){
   searchQuery = $(this).val();
   getRecordOnStatus();
+})
+
+$("#exploreCourseBtn").on('click',()=>{
+
+    window.location.assign('../pages/coursesPage.html')
 })

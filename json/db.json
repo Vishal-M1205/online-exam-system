@@ -24,86 +24,108 @@
     }
   ],
   "course": [
-    {
-      "courseId": 1,
-      "courseName": "Full Stack Web Development",
-      "departmentName": "Information Technology",
-      "deptId": 1,
-      "fees": 45000,
-      "id": "MdI3phde7EY"
-    },
-    {
-      "courseId": 2,
-      "courseName": "Data Science",
-      "departmentName": "Information Technology",
-      "deptId": 1,
-      "fees": 50000,
-      "id": "WHM3FaEKmJI"
-    },
-    {
-      "courseId": 3,
-      "courseName": "Cloud Computing",
-      "departmentName": "Information Technology",
-      "deptId": 1,
-      "fees": 40000,
-      "id": "V2Z3P9vwGes"
-    },
-    {
-      "courseId": 4,
-      "courseName": "Digital Marketing",
-      "departmentName": "Business & Marketing",
-      "deptId": 2,
-      "fees": 30000,
-      "id": "6jHluU_M_IA"
-    },
-    {
-      "courseId": 5,
-      "courseName": "Financial Accounting",
-      "departmentName": "Business & Marketing",
-      "deptId": 2,
-      "fees": 35000,
-      "id": "BmDcOxy0HvY"
-    },
-    {
-      "courseId": 6,
-      "courseName": "Graphic Design",
-      "departmentName": "Creative Arts",
-      "deptId": 3,
-      "fees": 28000,
-      "id": "ixQdjRGZGdk"
-    },
-    {
-      "courseId": 7,
-      "courseName": "UI/UX Design",
-      "departmentName": "Creative Arts",
-      "deptId": 3,
-      "fees": 32000,
-      "id": "v3X_o84udLI"
-    },
-    {
-      "courseId": 8,
-      "courseName": "Spoken English",
-      "departmentName": "Language & Communication",
-      "deptId": 4,
-      "fees": 15000,
-      "id": "moDGZarF5xg"
-    },
-    {
-      "courseId": 9,
-      "courseName": "Public Speaking",
-      "departmentName": "Language & Communication",
-      "deptId": 4,
-      "fees": 18000,
-      "id": "p3oMdtt15b4"
-    },
-    {
-      "courseId": 10,
-      "courseName": "Cyber Security",
-      "departmentName": "Professional Skills",
-      "deptId": 5,
-      "fees": 55000,
-      "id": "IdOZoLh2PlI"
-    }
+    
+  {
+    "courseId": 1,
+    "courseName": "Full Stack Web Development",
+    "departmentName": "Information Technology",
+    "deptId": 1,
+    "description": "Evaluate your skills in front-end, back-end, databases, REST APIs, and full-stack application development.",
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=250&fit=crop&q=80",
+    "fees": 45000,
+    "id": "MdI3phde7EY"
+  },
+  {
+    "courseId": 2,
+    "courseName": "Data Science",
+    "departmentName": "Information Technology",
+    "deptId": 1,
+    "description": "Test your knowledge of data analysis, statistics, machine learning, and Python programming.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=250&fit=crop&q=80",
+    "fees": 50000,
+    "id": "WHM3FaEKmJI"
+  },
+  {
+    "courseId": 3,
+    "courseName": "Cloud Computing",
+    "departmentName": "Information Technology",
+    "deptId": 1,
+    "description": "Assess your understanding of cloud platforms, virtualization, networking, and deployment concepts.",
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&h=250&fit=crop&q=80",
+    "fees": 40000,
+    "id": "V2Z3P9vwGes"
+  },
+  {
+    "courseId": 4,
+    "courseName": "Digital Marketing",
+    "departmentName": "Business & Marketing",
+    "deptId": 2,
+    "description": "Measure your knowledge of SEO, social media, content marketing, and online advertising strategies.",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=250&fit=crop&q=80",
+    "fees": 30000,
+    "id": "6jHluU_M_IA"
+  },
+  {
+    "courseId": 5,
+    "courseName": "Financial Accounting",
+    "departmentName": "Business & Marketing",
+    "deptId": 2,
+    "description": "Demonstrate your skills in bookkeeping, financial statements, taxation, and accounting principles.",
+    "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&h=250&fit=crop&q=80",
+    "fees": 35000,
+    "id": "BmDcOxy0HvY"
+  },
+  {
+    "courseId": 6,
+    "courseName": "Graphic Design",
+    "departmentName": "Creative Arts",
+    "deptId": 3,
+    "description": "Showcase your understanding of design principles, typography, color theory, and creative tools.",
+    "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&h=250&fit=crop&q=80",
+    "fees": 28000,
+    "id": "ixQdjRGZGdk"
+  },
+  {
+    "courseId": 7,
+    "courseName": "UI/UX Design",
+    "departmentName": "Creative Arts",
+    "deptId": 3,
+    "description": "Test your knowledge of user research, wireframing, prototyping, and interface design.",
+    "image": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=500&h=250&fit=crop&q=80",
+    "fees": 32000,
+    "id": "v3X_o84udLI"
+  },
+  {
+    "courseId": 8,
+    "courseName": "Spoken English",
+    "departmentName": "Language & Communication",
+    "deptId": 4,
+    "description": "Assess your grammar, vocabulary, pronunciation, listening, and spoken communication skills.",
+    "image": "https://images.unsplash.com/photo-1513258496099-48168024aec0?w=500&h=250&fit=crop&q=80",
+    "fees": 15000,
+    "id": "moDGZarF5xg"
+  },
+  {
+    "courseId": 9,
+    "courseName": "Public Speaking",
+    "departmentName": "Language & Communication",
+    "deptId": 4,
+    "description": "Evaluate your confidence, presentation skills, speech delivery, and audience engagement.",
+    "image": "https://images.unsplash.com/photo-1511578314322-379afb476865?w=500&h=250&fit=crop&q=80",
+    "fees": 18000,
+    "id": "p3oMdtt15b4"
+  },
+  {
+    "courseId": 10,
+    "courseName": "Cyber Security",
+    "departmentName": "Professional Skills",
+    "deptId": 5,
+    "description": "Test your expertise in network security, ethical hacking, cryptography, and cyber threat management.",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=500&h=250&fit=crop&q=80",
+    "fees": 55000,
+    "id": "IdOZoLh2PlI"
+  }
+
   ],
   "department": [
     {
@@ -144,10 +166,10 @@
       "fees": "45000",
       "centreId": 6,
       "centre": "Erode",
-      "preferredDate": "2026-06-29",
-      "status": "Cancelled",
-      "reason": "No seats",
-      "isDeleted": true,
+      "preferredDate": "2026-06-30",
+      "status": "Pending",
+      "reason": "",
+      "isDeleted": false,
       "id": "1"
     },
     {
@@ -162,7 +184,7 @@
       "centreId": 2,
       "centre": "Chennai",
       "preferredDate": "2026-08-01",
-      "status": "Approved",
+      "status": "Attended",
       "reason": "",
       "isDeleted": false,
       "id": "2"
@@ -178,7 +200,7 @@
       "fees": 15000,
       "centreId": 3,
       "centre": "Madurai",
-      "preferredDate": "2026-07-21",
+      "preferredDate": "2026-06-21",
       "status": "Approved",
       "reason": "",
       "isDeleted": false,
@@ -196,8 +218,8 @@
       "centreId": 9,
       "centre": "Tirunelveli",
       "preferredDate": "2026-06-27",
-      "status": "Pending",
-      "reason": "",
+      "status": "Rejected",
+      "reason": "No seats in that date",
       "isDeleted": false,
       "id": "hDKWgKfboK0"
     },
@@ -232,7 +254,7 @@
       "preferredDate": "2026-08-26",
       "status": "Pending",
       "reason": "",
-      "isDeleted": false,
+      "isDeleted": true,
       "id": "ffjGUH7x1BI"
     }
   ],
