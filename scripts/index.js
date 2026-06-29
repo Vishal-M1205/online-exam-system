@@ -1,5 +1,7 @@
 import {USER_API,DEP_API} from '../scripts/api.js';
 
+
+// Regex for the validations
 const nameRegex = /^[A-Za-z ]{3,}$/;
 const emailRegex = /^[a-zA-z0-9-\.]+@[a-zA-z0-9-\.]+\.[a-zA-z0-9-\.]{2,}$/;
 const passRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@!#$%&*-_\.]).{8,15}$/;
@@ -8,11 +10,12 @@ const mobileRegex = /^[0-9]{10}$/;
 let signupValid = true;
 let loginValid = true;
 
+//Modal from the DOM
 const signupModal = new bootstrap.Modal(document.getElementById('signupModal'));
 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
 
 
-
+//toastr Configuration
 toastr.options = {
         "positionClass": "toast-bottom-right",
         "showDuration": "300",
@@ -20,8 +23,12 @@ toastr.options = {
       }
 
 const dobDate = new Date();
+
+// Date Validation
 dobDate.setFullYear(dobDate.getFullYear() - 17);
 $('#dob').prop('max', dobDate.toISOString().split('T')[0]);
+
+// Valid and In-valid class management helper function
 
 const addInValidClass = function (msg,eleID,msgID){
   $(msgID).text(msg)
@@ -40,6 +47,7 @@ const addValidClass = function(msg,eleID,msgID){
           $(msgID).removeClass('invalid-feedback');
 }
 
+//Populating the select tag in the Signup Modal
 function renderDepartment(data){
    const parent = document.getElementById('department');
    let html = "";
@@ -52,16 +60,24 @@ function renderDepartment(data){
 }
 
 async function getDepartment(){
-   const response = await fetch(DEP_API);
-   const data = await response.json();
-   renderDepartment(data);
+    try {
+        const response = await fetch(DEP_API);
+       const data = await response.json();
+       renderDepartment(data);
+        
+    } catch (error) {
+        toastr.error(error.message)
+    }
+   
 
 }
 
 getDepartment();
 
+// 'input' event Validations for name, email, mobile no, password
+
 $('#name').on('input',function(){
-    if(nameRegex.test($(this).val())){
+    if(nameRegex.test($(this).val().trim())){
         addValidClass('Looks Good!','#name','#nameErrMsg' )
         signupValid = true;
     }
@@ -72,7 +88,7 @@ $('#name').on('input',function(){
 })
 
 $('#email').on('input',function(){
-    if(emailRegex.test($(this).val())){
+    if(emailRegex.test($(this).val().trim())){
         addValidClass('Valid Email','#email','#emailErrMsg' )
         signupValid = true;
     }
@@ -83,7 +99,7 @@ $('#email').on('input',function(){
 })
 
 $('#pass').on('input',function(){
-    if(passRegex.test($('#pass').val())){
+    if(passRegex.test($('#pass').val().trim())){
         addValidClass('Valid Password','#pass','#passErrMsg' )
         signupValid = true;
     }
@@ -91,7 +107,7 @@ $('#pass').on('input',function(){
         addInValidClass('Invalid Password', '#pass','#passErrMsg' )
         signupValid = false;
     }
-    if($('#pass').val()==$('#cpass').val()){
+    if($('#pass').val().trim()==$('#cpass').val().trim()){
         addValidClass('Password Matched','#cpass','#cpassErrMsg' )
         signupValid = true;
     }
@@ -102,7 +118,7 @@ $('#pass').on('input',function(){
 })
 
 $('#cpass').on('input',()=>{
-    if($('#pass').val()==$('#cpass').val()){
+    if($('#pass').val().trim()==$('#cpass').val().trim()){
         addValidClass('Password Matched','#cpass','#cpassErrMsg' )
         signupValid = true;
     }
@@ -113,7 +129,7 @@ $('#cpass').on('input',()=>{
 })
 
 $('#mobile').on('input',function(){
-    if(mobileRegex.test($(this).val())){
+    if(mobileRegex.test($(this).val().trim())){
         addValidClass('Valid Number','#mobile','#mobileErrMsg' )
         signupValid = true;
     }
@@ -123,48 +139,66 @@ $('#mobile').on('input',function(){
     }
 })
 
-$('#signModalBtn').on('click',async ()=>{
-   signupModal = true;
+// Validation for empty values and signup POST method
 
-   if(!$('#name').val()){
+$('#signModalBtn').on('click',async ()=>{
+   signupValid = true;
+
+   if(!$('#name').val().trim()){
        toastr.warning('Name Field is Empty');
        signupValid = false;
    }
-   else if(!$('#email').val()){
+   else if(!$('#email').val().trim()){
        toastr.warning('Email Field is Empty');
        signupValid = false;
    }
-   else if(!$('#pass').val()){
+   else if(!$('#pass').val().trim()){
        toastr.warning('Password Field is Empty');
        signupValid = false;
    }
-   else if(!$('#dob').val()){
+   else if(!$('#dob').val().trim()){
        toastr.warning('DOB Field is Empty');
        signupValid = false;
    }
-   else if(!$('#college').val()){
+   else if(!$('#college').val().trim()){
        toastr.warning('College Field is Empty');
        signupValid = false;
    }
-   else if(!$('#mobile').val()){
+   else if(!$('#mobile').val().trim()){
        toastr.warning('Mobile No. Field is Empty');
        signupValid = false;
    }
+   else if(!$("#male").prop('checked')&&!$("#female").prop('checked')){
+     toastr.warning('Select Gender');
+       signupValid = false;
+   }
+   
+   
+
+
+
 
 
    if(signupValid){
     try {
+        const emailCheck = await fetch(`${USER_API}?email=${$('#email').val()}`)
+    const emailResponse = await emailCheck.json(); 
+    if(emailResponse[0]?.email){
+        toastr.error('Email Already Exists')
+    }
+    else{
          const response  = await fetch(USER_API,{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
         },
         body:JSON.stringify({
-            name:$('#name').val(),
-            email:$('#email').val(),
-            password:$('#pass').val(),
+            name:$('#name').val().trim(),
+            email:$('#email').val().trim().toLowerCase(),
+            password:$('#pass').val().trim(),
             dob: $('#dob').val(),
-            college:$('#college').val(),
+            gender:$("#male").prop('checked')?"Male":"Female",
+            college:$('#college').val().trim(),
             deptId: $('#department').data('id'),
             departmentName: $('#department').val(),
             mobile: $('#mobile').val(),
@@ -176,7 +210,7 @@ $('#signModalBtn').on('click',async ()=>{
         signupModal.hide();
         toastr.success('Registration Success');
     }
-
+    }
     } catch (error) {
         toastr.error(error);
     }
@@ -184,6 +218,7 @@ $('#signModalBtn').on('click',async ()=>{
    }
 })
 
+// Login Validation
 
 $('#loginEmail').on('input',function(){
     if(emailRegex.test($(this).val())){

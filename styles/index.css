@@ -34,7 +34,10 @@ body{
     height: 200px;
     border: 2px solid var(--bg-pink);
     perspective: 1000px;
+    transition: all 0.5s;
 }
+
+
 
 .flip-card-inner {
     width: 100%;
@@ -56,6 +59,10 @@ body{
     transform: rotateY(180deg);
 }
 
+.flip-card:hover{
+    box-shadow: var(--bg-pink) 2px 2px 10px;
+}
+
 #navbar{
  background-color: var(--bg-navy);
  border-bottom: 5px solid var(--bg-pink);
@@ -69,10 +76,15 @@ body{
  background-color: var(--bg-pink);
 }
 .btn-pink{
- background-color: var(--bg-pink);
+ background: linear-gradient(to bottom,var(--bg-pink)60% ,rgb(239, 154, 168) ) ;
+ border: none;
+ transition: all 0.5s;
 }
 .btn-pink:hover{
  background-color: var(--bg-pink);
+ transform: translateY(-3px);
+box-shadow: 3px 3px 20px var(--bg-pink)
+
 }
 
 .text-pink{
@@ -82,15 +94,39 @@ body{
  color: rgba(43, 43, 197, 0.718);
 }
 
-.sign-up-btn{
+.border-pink{
+    border: solid 2px pink;
+}
+
+.btn-pink-outline{
     border: solid 2px var(--bg-pink);
 }
-.sign-up-btn:hover{
+.btn-pink-outline:hover{
     border: solid 2px var(--bg-pink);
     background-color: var(--bg-pink);
     color: white;
 }
 
+
+.count-card{
+    transition: all 0.5s;
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.185);
+}
+.count-card:hover{
+  transform: translateY(-3px);
+  box-shadow:  2px 2px 30px var(--bg-pink);
+}
+
+.data-card{
+  background: linear-gradient(135deg, white 80%,rgba(72, 159, 235, 0.208));
+  border: rgba(236, 138, 170, 0.386) 2px solid;
+  transition: all 0.5s;
+}
+
+.data-card:hover{
+   transform: translateY(-2px);
+   box-shadow: #417af6 2px 2px 10px;
+}
 
 .bg-pink-gradient{
      background: linear-gradient(to bottom, #ff5f7e, #ff9a8b);
@@ -145,11 +181,14 @@ background: linear-gradient(to bottom, #f97316, #fdba74);
     background: linear-gradient(to bottom, #2563eb, #60a5fa);
     color:white;
     border: none;
+    transition: all 0.5s;
 }
 .btn-blue:hover{
     background: linear-gradient(to bottom, #2563eb, #60a5fa);
     color:white;
     border: none;
+    transform: translateY(-3px);
+    box-shadow: #2563eb 2px 2px 10px;
 }
 
 #viewBtn{
@@ -163,7 +202,26 @@ background: linear-gradient(to bottom, #f97316, #fdba74);
     color: #dfa701;
     border: 2px solid #dfa701;
     background-color: #f2cb5671;
+}
 
+#reapplyBtn,#restoreBtn{
+    color: var(--bg-pink);
+    border: rgb(254, 157, 173) 2px solid;
+    background-color: rgba(253, 209, 224, 0.493);
+}
+
+#cancelBtn,#rejectBtn,#permanentDeleteBtn{
+ 
+    color: red;
+    border: rgba(255, 0, 0, 0.796) 2px solid;
+    background-color: rgba(255, 0, 0, 0.115);
+ 
+}
+
+#attendBtn, #approveBtn{
+    color: green;
+    border: green solid 2px;
+    background-color: rgba(0, 128, 0, 0.104);
 }
 
 .cursor-pointer{
@@ -218,4 +276,33 @@ background: linear-gradient(to bottom, #f97316, #fdba74);
     100% {
         transform: scale(1);
     }
+}
+
+
+.icon-tooltip {
+    position: relative;
+}
+
+.icon-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 9999;
+}
+
+#instructionBtn{
+    transition: all 0.5s;
+}
+
+#instructionBtn:hover{
+  box-shadow: var(--bg-pink) 3px 3px 20px;
+  transform: translateY(-3px);
 }

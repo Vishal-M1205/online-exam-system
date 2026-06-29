@@ -2,14 +2,29 @@ import {COURSE_API,USER_API,CENTRE_API,ENROLL_API} from '../scripts/api.js';
 
 const userDetails = JSON.parse(localStorage.getItem('user'));
 
-console.log(userDetails);
+console.log(userDetails,"user");
 
+//Updating user detail offcanvas 
+$("#userNameOffCanvas").text(userDetails[0].name)
+$("#userRole").text(userDetails[0].role)
+$("#userEmail").text(userDetails[0].email)
+$("#userGender").text(userDetails[0].gender)
+$("#userDob").text(dateFormat(userDetails[0].dob))
+$("#userDepartment").text(userDetails[0].departmentName)
+$("#userCollege").text(userDetails[0].college)
+$("#userMobile").text(userDetails[0].mobile)
+
+
+
+//Helper function for Date - output : Aug 06,2026
 function dateFormat(date){
   let newDate = new Date(date)
   newDate = newDate.toDateString().split(" ")
    return `${newDate[1]} ${newDate[2]},${newDate[3]}`
 
 }
+
+//For maintaining the state in while applying filter used in URLSearchParams
 
 let status = "";
 let searchQuery = "";
@@ -18,25 +33,25 @@ let endDateQuery = "";
 
 let isDeleted = false;
 
+
+//Modal from the DOM
 const enrollModal = new bootstrap.Modal(document.getElementById('enrollModal'));
 const updateModal = new bootstrap.Modal(document.getElementById('updateModal'));
 const reapplyModal = new bootstrap.Modal(document.getElementById('reapplyModal'));
+const filterModal = new bootstrap.Modal(document.getElementById('filterModal'));
 
+//toastr Configuration
 toastr.options = {
         "positionClass": "toast-bottom-right",
         "showDuration": "300",
         "preventDuplicates": true
       }
 
-async function checkExpire(){
-    const response = await fetch(`${ENROLL_API}?preferredDate:lt=${new Date().toISOString().split('T')[0]}`);
-    const data = await response.json();
-    console.log(data,'expired');
-}
-checkExpire();
 
+//Setting user name in the navbar
 $('#userName').text(userDetails[0].name.split(' ')[0]);
 
+//logout button in the navbar
 $('#logoutBtn').on('click',async ()=>{
   const response = await  Swal.fire({
     title: 'Are you sure you want to logout?',
@@ -52,9 +67,10 @@ $('#logoutBtn').on('click',async ()=>{
     }
 })
 
-
+// Gets the count for the statistics section
 async function getStats() {
-   const response = await fetch(`${ENROLL_API}?userId=${userDetails[0].id}&isDeleted=false`)
+    try {
+        const response = await fetch(`${ENROLL_API}?userId=${userDetails[0].id}&isDeleted=false`)
    const data = await response.json();
 
    
@@ -69,7 +85,7 @@ async function getStats() {
      else if(e.status=="Approved"){
         approved += 1;
      }
-     else{
+     else if(e.status=="Rejected"){
         rejected+=1;
      }
      
@@ -79,27 +95,40 @@ async function getStats() {
     $('#pendingCount').text(pending);
     $('#rejectCount').text(rejected);
     $('#approveCount').text(approved);
+        
+    } catch (error) {
+        toastr.error(error.message)
+    }
+   
 }
 
 getStats();
 
+// Dynamically render the element in the DOM using a parent tag
 async function renderElement(data) {
     const parent = document.getElementById('parent');
     parent.innerHTML = '';
     let html = "";
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     data.forEach((e)=>{
+        const examDate = new Date(e.preferredDate);
+        examDate.setHours(0, 0, 0, 0);
+        const isExpired = examDate < today && e.status !== "Attended";
+       
         html += `
            <div class="col-lg-4 col-md-6 col-12">
-           <div class="d-flex align-items-start justify-content-between bg-white border border-2 px-4 py-3 rounded-4">
+           <div class="d-flex align-items-start justify-content-between bg-white  px-4 py-3 rounded-4 data-card">
              <div class="d-flex flex-column gap-2">
               <p class="mb-0 fw-semibold">${e.courseName}</p>
                <p class="mb-0"><span class="fw-bold">Exam Date : </span>${dateFormat(e.preferredDate)}</p>
                <p class="mb-0"><span class="fw-bold">Centre : </span>${e.centre}</p>
+               <div class="d-flex align-items-center gap-1">
                <p class="px-2 py-1 
               ${e.status == "Approved"?`
                 bg-success-subtle text-success
                 `: e.status == "Pending" ? `
-                bg-warning-subtle text-warning
+                bg-warning-subtle text-yellow
                 `:e.status == "Rejected"?`
                 bg-danger-subtle text-danger
                 `:`
@@ -107,11 +136,23 @@ async function renderElement(data) {
                 ` }
                 
 
-               rounded-pill w-50 text-center">${e.status}</p>
+               rounded-pill w-50 text-center">${e.status}
+               
+               </p>
+               ${
+                        isExpired
+                            ? `<i class="bi fs-5 mb-3 bi-exclamation-triangle-fill text-danger icon-tooltip"
+                 data-tooltip="Exam date has passed"
+                                  ></i>`
+                            : ""
+                    }
+               </div>
+               
              </div>
              <div class="d-flex flex-column gap-2" >
 
-                 <button class="btn  bi bi-eye "
+                 <button class="btn  bi bi-eye icon-tooltip"
+                 data-tooltip="View"
                  data-bs-toggle="modal"
                  data-bs-target="#viewModal"
                  data-id="${e.id}"
@@ -119,33 +160,39 @@ async function renderElement(data) {
                  </button>
                  
                  ${e.status == "Pending"?`
-                    <button class="btn  bi bi-pen"
+                    <button class="btn  bi bi-pen icon-tooltip"
+                 data-tooltip="Edit"
                     data-bs-toggle="modal"
                     data-bs-target="#updateModal"
                     id="updateBtn"
                     data-id="${e.id}">
                  </button>
-                  <button class="btn btn-danger bi bi-trash" 
+                  <button class="btn  bi bi-trash icon-tooltip"
+                 data-tooltip="Cancel" 
                  id="cancelBtn"
                  data-id="${e.id}">
                  </button>
                     `:e.status == "Rejected"?`
-                    <button class="btn btn-warning bi bi-arrow-counterclockwise"
+                    <button class="btn  bi bi-arrow-counterclockwise icon-tooltip"
+                 data-tooltip="Reapply"
                     data-bs-toggle="modal"
                     data-bs-target="#reapplyModal"
                     id="reapplyBtn"
                     data-id="${e.id}">
                  </button>
-                  <button class="btn btn-danger bi bi-trash" 
+                  <button class="btn  bi bi-trash icon-tooltip"
+                 data-tooltip="Cancel"  
                  id="cancelBtn"
                  data-id="${e.id}">
                  </button>
                     `:e.status == "Approved"?`
-                    <button class="btn btn-success bi bi-check-circle" 
+                    <button class="btn  bi bi-check-circle icon-tooltip"
+                 data-tooltip="Attended ?" 
                     id="attendBtn"
                  data-id="${e.id}">
                  </button>
-                  <button class="btn btn-danger bi bi-trash" 
+                  <button class="btn  bi bi-trash icon-tooltip"
+                 data-tooltip="Cancel"  
                  id="cancelBtn"
                  data-id="${e.id}">
                  </button>
@@ -168,10 +215,12 @@ async function renderElement(data) {
     parent.innerHTML = html;
 }
 
+
+// Populate details in the view Modal
 async function viewDetails(id){
+    try {
     const response = await fetch(`${ENROLL_API}/${id}`);
     const data = await response.json();
-    console.log(data);
     $('#viewName').text(data.name)
     $('#viewEmail').text(data.email)
     $('#viewCourse').text(data.courseName)
@@ -187,40 +236,56 @@ async function viewDetails(id){
     else{
         $('#reason').addClass('d-none')
     }
+    } catch (error) {
+        toastr.error(error.message)
+    }
    
 }
 
+// Uses the filter sttate variable and URLSearchParams() to get the data
 async function getRecordOnStatus() {
+
+    try {
+        const params = new URLSearchParams();
+
+        params.append('userId',userDetails[0].id)
+
+        params.append('_sort','-updatedAt');
+
+        if(status){
+            params.append('status',status)
+        }
+
+        if(searchQuery){
+            params.append('centre:startsWith',searchQuery);
+        }
+
+        if(startDateQuery){
+            params.append('preferredDate:gte',startDateQuery)
+        }
+
+        if(endDateQuery){
+            params.append("preferredDate:lte",endDateQuery);
+        }
+
+        params.append('isDeleted',isDeleted);
+
+
+        const response = await fetch(`${ENROLL_API}?${params}`);
+        const data = await response.json();
+
+        renderElement(data);
+    } catch (error) {
+       toastr.error(error.message) 
+    }
      
-    const params = new URLSearchParams();
-
-    params.append('userId',userDetails[0].id)
     
-    if(status){
-       params.append('status',status)
-    }
-
-    if(searchQuery){
-        params.append('centre:startsWith',searchQuery);
-    }
-    
-    if(startDateQuery){
-        params.append('preferredDate:gte',startDateQuery)
-    }
-
-    if(endDateQuery){
-        params.append("preferredDate:lte",endDateQuery);
-    }
-    
-    params.append('isDeleted',isDeleted);
-
-    const response = await fetch(`${ENROLL_API}?${params}`);
-    const data = await response.json();
-
-   renderElement(data);
 }
 
 getRecordOnStatus();
+
+// Used eventlisteners to get the 'id' from the dynamically rendered elements 
+// onclick = "" cannot be used since the js type is 'module'
 
 document.addEventListener('click',(e)=>{
         
@@ -246,8 +311,10 @@ document.addEventListener('click',(e)=>{
         }    
     });
 
+// Change the status to attended    
 async function attendExam(id) {
-    const SweetResponse = await  Swal.fire({
+    try {
+      const SweetResponse = await  Swal.fire({
       title: 'Are you sure you attended the exam?',
       icon: 'info',
       showCancelButton: true,
@@ -262,19 +329,27 @@ async function attendExam(id) {
             "Content-Type":"application/json"
           },
           body:JSON.stringify({
-            status:"Attended"
+            status:"Attended",
+            updatedAt: new Date().toISOString().split('T')[0]
           })
       });
       getRecordOnStatus();
       getStats();
       toastr.success('Thank you for Attending the Exam');
-      }
+      }  
+    } catch (error) {
+        toastr.error(error.message)
+    }
      
 }
 
+
+// Change the status isDeleted = true
 async function cancelEnroll(id) {
-       const SweetResponse = await  Swal.fire({
-      title: 'Are you sure you want to delete?',
+    
+    try {
+      const SweetResponse = await  Swal.fire({
+      title: 'Are you sure you want to cancel the Application?',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -288,17 +363,24 @@ async function cancelEnroll(id) {
             "Content-Type":"application/json"
           },
           body:JSON.stringify({
-            isDeleted:true
+            isDeleted:true,
+             updatedAt: new Date().toISOString().split('T')[0]
           })
       });
       getRecordOnStatus();
       getStats();
       toastr.success('Deleted Successfully');
       }
+    } catch (error) {
+        toastr.error(error.message)
+    }
      
 }    
 
+//Change the status to 'Pending' 
 async function reapplyEnroll(id) {
+      
+    try {
        const response = await fetch(`${ENROLL_API}/${id}`);
        const data = await response.json();
        $("#reapplyDate").val(data.preferredDate);
@@ -328,7 +410,9 @@ async function reapplyEnroll(id) {
             body:JSON.stringify({
                 preferredDate: $("#reapplyDate").val(),
                 status:"Pending",
-                reason:""
+                reason:"",
+                updatedAt: new Date().toISOString().split('T')[0]
+                
             })
          });
 
@@ -341,12 +425,17 @@ async function reapplyEnroll(id) {
          
          
         })
+    } catch (error) {
+        toastr.error(error.message)        
+    }
 
 }
 
 
-
+// Populate the select tag used in Enroll Modal
 async function getEnrollDetails() {
+ 
+    try {
      const courseResponse = await fetch(COURSE_API);
      const courseData = await courseResponse.json();
      
@@ -396,106 +485,125 @@ async function getEnrollDetails() {
      updateCentreParent.innerHTML = centreHTML;   
      
     $("#examDate").attr('min', new Date().toISOString().split('T')[0])
+    } catch (error) {
+        toastr.error(error.message)
+    }
 }
 getEnrollDetails();
 
-
+// Update the Exam details
 async function updateEnroll(id){
-  const courseResponse = await fetch(COURSE_API);
-  const courseData = await courseResponse.json();
 
-  const response = await fetch(`${ENROLL_API}/${id}`);
-  const data = await response.json();
+  try {
+    const courseResponse = await fetch(COURSE_API);
+    const courseData = await courseResponse.json();
 
-  
+    const response = await fetch(`${ENROLL_API}/${id}`);
+    const data = await response.json();
 
-  $(`#updateCourse option[data-id="${data.courseId}"]`).prop('selected', true);
-  $(`#updateCentre option[data-id="${data.courseId}"]`).prop('selected', true);
-
-  
-   if(data.courseId){
-     const fees =  courseData.filter((c)=> c.courseId == data.courseId)
-            
-     $("#updateFees").val(fees[0].fees)
-    }
-
-   $("#updateCourse").on('change',function(){
-           const id = $(this).find(":selected").data("id");
-          if(id){
-            const fees =  courseData.filter((c)=> c.courseId == id)
-            
-            $("#updateFees").val(fees[0].fees)
-          }
-          else{
-            $("#updateFees").val("");
-          }
-     })
     
-     $("#updateExamDate").val(data.preferredDate);
-     $("#updateExamDate").attr('min', new Date().toISOString().split('T')[0])
 
-    $("#updateApplyBtn").on('click',async ()=>{
-    let enrollValid = true;
+    $(`#updateCourse option[data-id="${data.courseId}"]`).prop('selected', true);
+    $(`#updateCentre option[data-id="${data.courseId}"]`).prop('selected', true);
 
-    if(!$("#updateCourse").find(":selected").data("id")){
-        enrollValid = false;
-        toastr.warning('Empty Course Field !');
-    }
-    else if(!$("#updateCentre").find(":selected").data("id")){
-        enrollValid = false;
-        toastr.warning('Empty Centre Field !');
-    }
-    else if(!$("#updateExamDate").val()){
-        enrollValid = false;
-        toastr.warning('Empty Date Field !')
-    }
+    
+    if(data.courseId){
+        const fees =  courseData.filter((c)=> c.courseId == data.courseId)
+                
+        $("#updateFees").val(fees[0].fees)
+        }
 
-    if(enrollValid){
+    $("#updateCourse").on('change',function(){
+            const id = $(this).find(":selected").data("id");
+            if(id){
+                const fees =  courseData.filter((c)=> c.courseId == id)
+                
+                $("#updateFees").val(fees[0].fees)
+            }
+            else{
+                $("#updateFees").val("");
+            }
+        })
         
-      const SweetResponse = await  Swal.fire({
-      title: 'Are you sure you want to update?',
-      icon: 'info',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33'
-      }) 
+        $("#updateExamDate").val(data.preferredDate);
+        $("#updateExamDate").attr('min', new Date().toISOString().split('T')[0])
 
-      if(SweetResponse.isConfirmed){
-         const response = await fetch(`${ENROLL_API}/${id}`, {
-            method:'PATCH',
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-               courseId : $("#updateCourse").find(":selected").data("id"),
-               courseName: $("#updateCourse").find(":selected").val(),
-               deptId: $("#updateCourse").find(":selected").data("depid"),
-               deptName: $("#updateCourse").find(":selected").data("department"),
-               fees: $("#updateFees").val(),
-               centreId:$("#updateCentre").find(":selected").data("id"),
-               centre: $("#updateCentre").find(":selected").val(),
-               preferredDate: $("#updateExamDate").val(),
-            })
-         })
+        $("#updateApplyBtn").on('click',async ()=>{
+        let enrollValid = true;
 
-         if(response.ok){
-            toastr.success('Updated Successfully !')
-            getRecordOnStatus();
-            getStats();
-            updateModal.hide();
+        if(!$("#updateCourse").find(":selected").data("id")){
+            enrollValid = false;
+            toastr.warning('Empty Course Field !');
+        }
+        else if(!$("#updateCentre").find(":selected").data("id")){
+            enrollValid = false;
+            toastr.warning('Empty Centre Field !');
+        }
+        else if(!$("#updateExamDate").val()){
+            enrollValid = false;
+            toastr.warning('Empty Date Field !')
+        }
+
+        if(enrollValid){
+
+        const checkResponse = await fetch(`${ENROLL_API}?userId=${userDetails[0].id}&isDeleted=false`);
+        const checkData = await checkResponse.json();
+        console.log(checkData,id);
+        for (let e of checkData) {
+        if (e.courseName === $("#updateCourse").find(":selected").val() && id != e.id) {
+            toastr.warning("Already Registered this Course");
+            return; 
+        }
+    }
             
-         }
-      }
+        const SweetResponse = await  Swal.fire({
+        title: 'Are you sure you want to update?',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+        }) 
 
+        if(SweetResponse.isConfirmed){
+            const response = await fetch(`${ENROLL_API}/${id}`, {
+                method:'PATCH',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                courseId : $("#updateCourse").find(":selected").data("id"),
+                courseName: $("#updateCourse").find(":selected").val(),
+                deptId: $("#updateCourse").find(":selected").data("depid"),
+                deptName: $("#updateCourse").find(":selected").data("department"),
+                fees: $("#updateFees").val(),
+                centreId:$("#updateCentre").find(":selected").data("id"),
+                centre: $("#updateCentre").find(":selected").val(),
+                preferredDate: $("#updateExamDate").val(),
+                updatedAt: new Date().toISOString().split('T')[0]
+                })
+            })
+
+            if(response.ok){
+                toastr.success('Updated Successfully !')
+                getRecordOnStatus();
+                getStats();
+                updateModal.hide();
+                
+            }
+        }
+
+            
         
-      
-    }
-})
+        }
+    })
+  } catch (error) {
+    toastr.error(error.message)
+  }
 
 }
 
 
-
+// Enroll Submit Button
 $("#enrollApplyBtn").on('click',async ()=>{
     let enrollValid = true;
 
@@ -511,8 +619,20 @@ $("#enrollApplyBtn").on('click',async ()=>{
         enrollValid = false;
         toastr.warning('Empty Date Field !')
     }
+    
+    
 
     if(enrollValid){
+      
+     const checkResponse = await fetch(`${ENROLL_API}?userId=${userDetails[0].id}&isDeleted=false`);
+     const checkData = await checkResponse.json();
+    
+     for (let e of checkData) {
+    if (e.courseName === $("#course").find(":selected").val()) {
+        toastr.warning("Already Registered this Course");
+        return; 
+    }
+   }
         
       const SweetResponse = await  Swal.fire({
       title: 'Are you sure you want to apply?',
@@ -542,6 +662,8 @@ $("#enrollApplyBtn").on('click',async ()=>{
                preferredDate: $("#examDate").val(),
                status : "Pending",
                reason:"",
+               createdAt: new Date().toISOString().split('T')[0],
+                updatedAt: new Date().toISOString().split('T')[0],
                isDeleted: false
             })
          })
@@ -559,6 +681,9 @@ $("#enrollApplyBtn").on('click',async ()=>{
       
     }
 })
+
+
+// Button CSS State Management 
 
 function btnState(add,rem1,rem2,rem3,rem4){
     $(add).addClass('btn-pink-gradient');
@@ -600,16 +725,25 @@ $('#attnBtn').on('click',()=>{
 })
 
 
+// Filter Apply Button
 
 $('#filterAplyBtn').on('click',()=>{
+ if($('#startDateFilter').val()||$("#endDateFilter").val()){
    startDateQuery = $('#startDateFilter').val();
    endDateQuery  = $("#endDateFilter").val();
    
    getRecordOnStatus();
    $('#clrFilter').prop('disabled',false);
+   filterModal.hide();
+ }
+ else{
+    toastr.warning('Atleast select one Filter')
+ }
 })
 
 $("#clrFilter").on('click',()=>{
+    $('#startDateFilter').val("")
+    $("#endDateFilter").val("")
     startDateQuery = "";
     endDateQuery = "";
     getRecordOnStatus();
@@ -625,3 +759,5 @@ $("#exploreCourseBtn").on('click',()=>{
 
     window.location.assign('../pages/coursesPage.html')
 })
+
+

@@ -2,8 +2,11 @@ import {COURSE_API,USER_API,CENTRE_API,ENROLL_API} from '../scripts/api.js';
 
 const userDetails = JSON.parse(localStorage.getItem('user'));
 
+//Setting user name in the navbar
 $('#userName').text(userDetails[0].name.split(' ')[0]);
 
+
+//logout button in the navbar
 $('#logoutBtn').on('click',async ()=>{
   const response = await  Swal.fire({
     title: 'Are you sure you want to logout?',
@@ -19,11 +22,13 @@ $('#logoutBtn').on('click',async ()=>{
     }
 })
 
+
+// Redirect to the previous page
 $("#backBtn").on('click',()=>{
     window.history.back();
 })
 
-
+//Render the course details dynamically in the DOM
 async function renderCourseElement(data) {
     const parent = document.getElementById('courseParent');
     parent.innerHTML = '';
@@ -31,7 +36,7 @@ async function renderCourseElement(data) {
     data.forEach((e)=>{
         html += `
            <div class="col-md-4 ">
-    <div class="card h-100 shadow-sm border-0">
+    <div class="card h-100 shadow-sm border-pink ">
         <img
             src="${e.image}"
             class="card-img-top"
@@ -64,11 +69,16 @@ async function renderCourseElement(data) {
     parent.innerHTML = html;
 }
 
-
+//Fetching the Course Data
 async function getCourse() {
-  const response = await fetch(COURSE_API);
+    try {
+         const response = await fetch(COURSE_API);
   const data = await response.json();
-  renderCourseElement(data);  
+  renderCourseElement(data); 
+    } catch (error) {
+        toastr.error(error.message)
+    }
+  
 } 
 getCourse();
 

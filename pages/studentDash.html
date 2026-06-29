@@ -11,8 +11,15 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
 <body>
+
+    <!-- =====================================================
+     NAVBAR SECTION
+     Includes Username, Logout Options
+    ===================================================== -->
+
     <nav class="navbar navbar-expand-lg " id="navbar">
         <div class="navbar-brand text-white ms-4 fs-4">
            <span class="bi bi-mortarboard-fill"></span> ScholarHub
@@ -22,17 +29,22 @@
         </button>
        <div class="navbar-collapse collapse text-center" id="navCollapse">
          <ul class="navbar-nav ms-auto gap-2 me-3">
-            <li><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill">Hi <span id="userName"></span> !</a></li>
-            <li><a href="#"  class="btn sign-up-btn text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
+            <li><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas">Hi <span id="userName"></span> !</a></li>
+            <li><a href="#"  class="btn btn-pink-outline text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
          </ul> 
 
        </div>
     </nav>
+
+    <!-- =====================================================
+     STATISTICS SECTION
+     Includes Approved, Rejected, Enrollment, Pending 
+    ===================================================== -->
     
     <section class="container-lg container-fluid mt-5">
    <div class="row g-3">
      <div class="col-md-3 col-sm-6 col-12">
-        <a href="#parent" class="text-decoration-none"><div class="bg-blue-gradient text-white px-md-3 px-2 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg cursor-pointer" id="enrollCard">
+        <a href="#parent" class="text-decoration-none"><div class="bg-blue-gradient text-white px-md-3 px-2 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between cursor-pointer count-card" id="enrollCard">
                         <div>
                            <p class="bi bi-person-plus-fill mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Enrollment</p>
@@ -44,7 +56,7 @@
      </div>
      <div class="col-md-3 col-sm-6 col-12">
       <a href="#parent" class="text-decoration-none">
-        <div class="bg-success-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg cursor-pointer" id="approvedCard">
+        <div class="bg-success-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between count-card cursor-pointer" id="approvedCard">
                         <div>
                            <p class="bi bi-check-circle-fill mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Approved</p>
@@ -57,7 +69,7 @@
      </div>
      <div class="col-md-3 col-sm-6 col-12">
       <a href="#parent" class="text-decoration-none">
-        <div class="bg-danger-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg cursor-pointer" id="rejectedCard">
+        <div class="bg-danger-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between count-card cursor-pointer" id="rejectedCard">
                         <div>
                            <p class="bi bi-x-circle-fill mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Rejected</p>
@@ -69,7 +81,7 @@
      </div>
      <div class="col-md-3 col-sm-6 col-12">
       <a href="#parent" class="text-decoration-none">
-        <div class="bg-yellow-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg cursor-pointer" id="pendingCard">
+        <div class="bg-yellow-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between count-card cursor-pointer" id="pendingCard">
                         <div>
                            <p class="bi bi-hourglass-split mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Pending</p>
@@ -88,11 +100,17 @@
          <p class="fs-3  text-lg-start  ms-lg-2 fw-semibold mb-0" >Enrollment Data</p>
          <div class="d-flex gap-2 align-items-center justify-content-center">
             <div>
-              <button class="btn btn-primary" id="exploreCourseBtn">
+               
+               <!--Navigates to coursePage.html-->
+
+              <button class="btn btn-blue" id="exploreCourseBtn">
                    Explore Course
              </button>
             </div>
             <div>
+               
+               <!--Toggle Enroll Modal-->
+
               <button class="btn btn-blue" data-bs-toggle="modal" data-bs-target="#enrollModal">
                    Enroll Exam
              </button>
@@ -101,6 +119,12 @@
            
          </div>
       </div>
+
+      <!-- =====================================================
+     FILTER SECTION
+     Includes Search, Date and City Filter. All, Pending, Rejected, Approved, Attended 
+     state filter 
+    ===================================================== -->
       
       <section class="container-lg container-fluid mt-4">
           <div class="row bg-light align-items-center border border-1 py-2 px-2 rounded-5 g-3">
@@ -144,7 +168,7 @@
 
     </section>
 
-    <section class="container-lg container-fluid mt-3">
+    <section class="container-lg container-fluid mt-3 mb-3">
       <div class="row g-2" id="parent">
          
        
@@ -152,34 +176,36 @@
       </div>
     </section>
 
+    <!--Filter Modal-->
 
     <div class="modal fade" id="filterModal">
        <div class="modal-dialog">
-         <div class="modal-content">
-           <div class="modal-header">
+         <div class="modal-content rounded-5">
+           <div class="modal-header bg-pink text-white  rounded-top-5 ">
               <h4 class="modal-title">Filter</h4>
               <button class="btn btn-close" data-bs-dismiss="modal"></button>
            </div>
            <div class="modal-body">
               <label for="startDateFilter" class="form-label">Start Date</label>
-              <input type="date" class="form-control"  id="startDateFilter">
+              <input type="date" class="form-control mb-2" onkeydown="{return false}"  id="startDateFilter">
                
               <label for="endDateFilter" class="form-label">End Date</label>
-              <input type="date" id="endDateFilter" class="form-control">
+              <input type="date" id="endDateFilter" onkeydown="{return false}" class="form-control">
 
            </div>
            <div class="modal-footer">
-            <button class="btn btn-primary ms-auto" data-bs-dismiss="modal" id="filterAplyBtn">Apply</button>
+            <button class="btn btn-pink text-white ms-auto" id="filterAplyBtn">Apply</button>
            </div>
          </div>
        </div>
     </div>
     
-    
+     <!--Enroll Modal-->
+
     <div class="modal fade" id="enrollModal">
        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-         <div class="modal-content">
-           <div class="modal-header">
+         <div class="modal-content rounded-4">
+           <div class="modal-header bg-pink text-white rounded-top-4">
               <h4 class="modal-title">Enroll Exam</h4>
               <button class="btn btn-close" data-bs-dismiss="modal"></button>
            </div>
@@ -200,16 +226,18 @@
 
            </form>
            <div class="modal-footer">
-            <button class="btn btn-primary ms-auto" id="enrollApplyBtn">Apply</button>
+            <button class="btn btn-pink text-white  ms-auto" id="enrollApplyBtn">Apply</button>
            </div>
          </div>
        </div>
     </div>
 
+     <!--View Details Modal-->
+
     <div class="modal modal-lg fade" id="viewModal">
       <div class="modal-dialog modal-dialog-scrollable">
-           <div class="modal-content">
-              <div class="modal-header">
+           <div class="modal-content rounded-4">
+              <div class="modal-header bg-pink text-white rounded-top-4">
                  <h4 class="modal-title">Student Details</h4>
                  <button class="btn btn-close ms-auto" data-bs-dismiss="modal"></button>
               </div>
@@ -257,11 +285,13 @@
       </div>
     </div>
 
+    <!--Update Modal-->
+
     <div class="modal fade" id="updateModal">
        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-         <div class="modal-content">
-           <div class="modal-header">
-              <h4 class="modal-title">Update Exam Detail</h4>
+         <div class="modal-content rounded-4">
+           <div class="modal-header bg-pink text-white rounded-top-4">
+              <h4 class="modal-title">Update Exam</h4>
               <button class="btn btn-close" data-bs-dismiss="modal"></button>
            </div>
            <form class="modal-body" >
@@ -281,16 +311,18 @@
 
            </form>
            <div class="modal-footer">
-            <button class="btn btn-primary ms-auto" id="updateApplyBtn">Apply</button>
+            <button class="btn btn-pink text-white ms-auto" id="updateApplyBtn">Apply</button>
            </div>
          </div>
        </div>
     </div>
 
+    <!--Reapply Modal-->
+
     <div class="modal fade" id="reapplyModal">
        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content rounded-4">
+            <div class="modal-header bg-danger text-white rounded-top-4">
               <h4 class="modal-title">Reapply Exam</h4>
               <button class="btn btn-close" data-bs-dismiss="modal"></button>
            </div>
@@ -299,11 +331,72 @@
                <input type="date" class="form-control" id="reapplyDate" >
            </div>
            <div class="modal-footer"> 
-             <button class="btn btn-primary ms-auto" id="reapplySubmitBtn">Apply</button>
+             <button class="btn btn-pink text-white ms-auto" id="reapplySubmitBtn">Apply</button>
            </div>
         </div>
        </div>
     </div>
+
+
+    <!--User Detail Offcanvas-->
+
+    <div class="offcanvas offcanvas-start" id="userOffcanvas">
+    <div class="offcanvas-header bg-pink text-white">
+        <h5 class="offcanvas-title">User Details</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas">
+        </button>
+    </div>
+
+    <div class="offcanvas-body">
+        <div class="container-fluid">
+
+            <div class="text-center mb-4">
+                <i class="bi bi-person-circle fs-1"></i>
+                <h4 id="userNameOffCanvas"></h4>
+                <span class="badge bg-primary" id="userRole"></span>
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="fw-bold">Email</label>
+                    <p id="userEmail" class="mb-0"></p>
+                </div>
+
+                <div class="col-6">
+                    <label class="fw-bold">Gender</label>
+                    <p id="userGender" class="mb-0"></p>
+                </div>
+
+                <div class="col-6">
+                    <label class="fw-bold">DOB</label>
+                    <p id="userDob" class="mb-0"></p>
+                </div>
+
+                <div class="col-12">
+                    <label class="fw-bold">Department</label>
+                    <p id="userDepartment" class="mb-0"></p>
+                </div>
+
+                <div class="col-12">
+                    <label class="fw-bold">College</label>
+                    <p id="userCollege" class="mb-0">
+                        
+                    </p>
+                </div>
+
+                <div class="col-12">
+                    <label class="fw-bold">Mobile No.</label>
+                    <p id="userMobile" class="mb-0"></p>
+                </div>
+
+            </div>
+
+        </div>
+      </div>
+   </div>
 
     <script type="module" src="../scripts/studentDash.js"></script>
 </body>

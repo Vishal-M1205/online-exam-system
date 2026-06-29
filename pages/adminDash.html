@@ -14,6 +14,11 @@
 </head>
 <body>
 
+       <!-- =====================================================
+     NAVBAR SECTION
+     Includes Username, Logout Options
+    ===================================================== -->
+
     <nav class="navbar navbar-expand-lg " id="navbar">
         <div class="navbar-brand text-white ms-4 fs-4">
            <span class="bi bi-mortarboard-fill"></span> ScholarHub
@@ -23,20 +28,27 @@
         </button>
        <div class="navbar-collapse collapse text-center" id="navCollapse">
          <ul class="navbar-nav ms-auto gap-2 me-3">
-            <li><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill">Hi <span id="userName"></span> !</a></li>
-            <li><a href="#"  class="btn sign-up-btn text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
+            <!--Toggle Userdetail Offcanvas-->
+            <li data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas"><a href="#" class="btn btn-pink text-white fw-semibold rounded-pill">Hi <span id="userName"></span> !</a></li>
+            <li><a href="#"  class="btn btn-pink-outline text-pink fw-semibold rounded-pill" id="logoutBtn"><span class="bi bi-door-open"></span> Logout</a></li>
          </ul> 
 
        </div>
     </nav>
 
+   <!-- =====================================================
+     STATISTICS SECTION
+     Includes Pending,Approved,Rejected Progress Bar and Courses, Students, 
+     Enrollment, Centre Count Cards
+    ===================================================== -->
 
     <section class="container-lg container-fluid mt-5">
       <div class="row g-3 ">
          <div class="col-md-6 col-12" >
              <div class="row g-3">
                 <div class="col-12 ">
-                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3 bg-pending-card"  >
+                <a href="#parent" class="text-decoration-none">
+                   <div class="border border-1 rounded-4  bg-white  px-3 py-3 bg-pending-card count-card" id="pendCard" >
                   <div class="d-flex flex-row align-items-center justify-content-between">
                      <p class="fw-semibold fs-4 text-yellow"><span class="bi bi-hourglass-split mx-2"></span>Pending</p>
                      <p class="fs-1 me-3 fw-bold text-yellow" id="pendingCount"></p>
@@ -49,10 +61,13 @@
                   </div>
                    
                 </div> 
+                </a>
+               
               </div>
 
               <div class="col-sm-6 col-12">
-                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3 bg-rejected-card"  >
+                <a href="#parent" class="text-decoration-none">
+                   <div class="border border-1 rounded-4 count-card bg-white  px-3 py-3 bg-rejected-card " id="rejectCard"  >
                   <div class="d-flex flex-row align-items-center justify-content-between">
                      <p class="fw-semibold fs-4 text-danger"><span class="bi bi-x-circle-fill mx-2"></span>Rejected</p>
                      <p class="fs-1 me-3 fw-bold text-danger" id="rejectCount"></p>
@@ -64,10 +79,13 @@
                   </div>
                    
                 </div> 
+                </a>
+               
               </div>
               
               <div class="col-sm-6 col-12 ">
-                <div class="border border-1 rounded-4 shadow-lg bg-white  px-3 py-3 bg-approved-card"  >
+                <a href="#parent" class="text-decoration-none">
+                  <div class="border border-1 rounded-4 count-card bg-white  px-3 py-3 bg-approved-card " id="approveCard"  >
                   <div class="d-flex flex-row align-items-center justify-content-between">
                      <p class="fw-semibold fs-4 text-success"><span class="bi bi-patch-check-fill mx-2"></span>Approved</p>
                      <p class="fs-1 me-3 fw-bold text-success" id="approveCount"></p>
@@ -79,7 +97,9 @@
                      </div>
                   </div>
                    
-                </div> 
+                </div>
+                </a>
+                 
               </div>
 
              </div>
@@ -91,7 +111,7 @@
         <div class="col-md-6 col-12">
           <div class="row g-md-3 g-2">
             <div class="col-6">
-                  <div class="bg-blue-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between shadow-lg">
+                  <div class="bg-blue-gradient text-white px-md-4 px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between  cursor-pointer count-card" id="courseCard">
                         <div>
                            <p class="bi bi-journal-bookmark-fill mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Courses</p>
@@ -102,7 +122,7 @@
                   </div>
             </div>
             <div class="col-6">
-                  <div class="bg-pink-gradient shadow-lg text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between">
+                  <div class="bg-pink-gradient count-card cursor-pointer text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between" id="studentCard">
                         <div>
                            <p class="bi bi-person-lines-fill mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Students</p>
@@ -113,7 +133,8 @@
                   </div>
             </div>
             <div class="col-6">
-                  <div class="bg-teal-gradient shadow-lg text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between">
+              <a href="#parent" class="text-decoration-none">
+                <div class="bg-teal-gradient count-card text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between" id="enrollmentCard">
                         <div>
                            <p class="bi bi-card-checklist mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Enrollment</p>
@@ -122,9 +143,11 @@
                            <p class="fw-bold fs-1 mb-0" id="enrollCount"></p>
                         </div>
                   </div>
+              </a>
+                  
             </div>
             <div class="col-6">
-                  <div class="bg-test-gradient shadow-lg text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between">
+                  <div class="bg-test-gradient count-card cursor-pointer text-white px-3 mt-2 py-4 rounded-4 d-flex align-items-center justify-content-between" id="centreCard" data-bs-toggle="modal" data-bs-target="#centreModal">
                         <div>
                            <p class="bi bi-building mb-0 fs-3"></p> 
                             <p class="fw-semibold fs-4 mb-0">Centres</p>
@@ -141,6 +164,13 @@
       </div>
       
     </section>
+
+       <!-- =====================================================
+     FILTER SECTION
+     Includes Search, Date and Course Filter. All, Pending, Rejected, Approved, Attended 
+     state filter 
+    ===================================================== -->
+
 
     <section class="container-lg container-fluid mt-5">
           <div class="row bg-light align-items-center border border-1 py-2 px-2 rounded-5 g-3">
@@ -190,10 +220,15 @@
           </div>
     </section>
     
+      <!-- =====================================================
+     DATA SECTION
+     Includes the table and parent <tbody> for dynamic rendering of the elements 
+    ===================================================== -->
+
     <section class="container-lg container-fluid mt-3">
 
       <div class="d-flex justify-content-between">
-         <p class="fs-3  text-lg-start  ms-lg-2 fw-semibold ">Enrollment Data</p>
+         <p class="fs-3  text-lg-start  ms-lg-2 fw-semibold" >Enrollment Data</p>
        <ul class="pagination pagination-sm align-items-center">
          <li class="page-link cursor-pointer" id="prevPage"> << </li>
          <li class="page-link active" id="pageNum"> 1 </li>
@@ -224,11 +259,13 @@
       </div>
        
     </section>
+
+    <!--Filter Modal-->
    
     <div class="modal fade" id="filterModal">
        <div class="modal-dialog">
-         <div class="modal-content">
-           <div class="modal-header">
+         <div class="modal-content rounded-4 ">
+           <div class="modal-header bg-pink text-white rounded-top-4">
               <h4 class="modal-title">Filter</h4>
               <button class="btn btn-close" data-bs-dismiss="modal"></button>
            </div>
@@ -242,17 +279,17 @@
 
            </div>
            <div class="modal-footer">
-            <button class="btn btn-primary ms-auto" data-bs-dismiss="modal" id="filterAplyBtn">Apply</button>
+            <button class="btn btn-pink text-white ms-auto" id="filterAplyBtn">Apply</button>
            </div>
          </div>
        </div>
     </div>
 
-
+       <!--View Details Modal-->
     <div class="modal modal-lg fade" id="viewModal">
       <div class="modal-dialog modal-dialog-scrollable">
            <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header bg-pink text-white">
                  <h4 class="modal-title">Student Details</h4>
                  <button class="btn btn-close ms-auto" data-bs-dismiss="modal"></button>
               </div>
@@ -299,11 +336,12 @@
            </div>
       </div>
     </div>
-
+     
+     <!--Reject Modal-->
     <div class="modal fade" id="rejectModal">
        <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-         <div class="modal-header">
+        <div class="modal-content rounded-4">
+         <div class="modal-header rounded-top-4 bg-danger text-white">
             <h4 class="modal-title">Reason for rejection ?</h4>
             <button class="btn btn-close" data-bs-dismiss="modal"></button>
          </div>
@@ -311,13 +349,76 @@
            <textarea  id="rejectReason" class="form-control"></textarea>
          </div>
          <div class="modal-footer">
-              <button class="btn btn-primary" id="rejectSubmit">Submit</button>
+              <button class="btn btn-pink text-white" id="rejectSubmit">Submit</button>
          </div>
         </div>
        </div>
     </div>
+
+     <!--Centre Modal - Display all the centre -->
+    <div class="modal fade" id="centreModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+       <div class="modal-content rounded-4">
+          <div class="modal-header rounded-top-4 text-white bg-pink">
+                <h4 class="modal-title">Centres</h4>
+                <button class="btn btn-close ms-auto" data-bs-dismiss="modal"></button>  
+          </div>
+          <div class="modal-body" id="centreParent">
+              
+          </div>
+       </div>
+    </div>
+    </div>
     
-   
+    <!--User Detail Offcanvas -->
+    <div class="offcanvas offcanvas-start" id="userOffcanvas">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title">User Details</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas">
+        </button>
+    </div>
+
+    <div class="offcanvas-body">
+        <div class="container-fluid">
+
+            <div class="text-center mb-4">
+                <i class="bi bi-person-circle fs-1"></i>
+                <h4 id="userNameOffCanvas"></h4>
+                <span class="badge bg-primary" id="userRole"></span>
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="fw-bold">Email</label>
+                    <p id="userEmail" class="mb-0"></p>
+                </div>
+
+                <div class="col-6">
+                    <label class="fw-bold">Gender</label>
+                    <p id="userGender" class="mb-0"></p>
+                </div>
+
+                <div class="col-6">
+                    <label class="fw-bold">DOB</label>
+                    <p id="userDob" class="mb-0"></p>
+                </div>
+
+                
+
+               
+                <div class="col-12">
+                    <label class="fw-bold">Mobile No.</label>
+                    <p id="userMobile" class="mb-0"></p>
+                </div>
+
+            </div>
+
+        </div>
+      </div>
+   </div>
    
 
     <script type="module" src="../scripts/api.js"></script>

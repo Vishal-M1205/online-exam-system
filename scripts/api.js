@@ -1,3 +1,5 @@
+// All the JSON Server Endpoints
+
 export const COURSE_API = `http://localhost:3000/course`;
 export const USER_API = 'http://localhost:3000/users';
 export const CENTRE_API = 'http://localhost:3000/testCentre';
